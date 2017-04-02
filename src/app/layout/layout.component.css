@@ -1,0 +1,20 @@
+.gamer-container {
+  width: 100%;
+  height: 100vh;
+}
+
+.gamer-content {
+  display: flex;
+  height: 100%;
+  align-items: left;
+  justify-content: left;
+}
+
+.gamer-sidenav {
+  padding: 20px;
+  width: 300px;
+}
+
+.fill-remaining-space {
+  flex: 1 1 auto;
+}
