@@ -34,6 +34,11 @@ export class DataService {
     return this.request(RequestMethod.Post, url, data);
   }
 
+  putApiRequest(resource: string, data: any): Observable<any> {
+    const url: string = this._apiUrl + resource + '/';
+    return this.request(RequestMethod.Put, url, data);
+  }
+
   request(method: RequestMethod, url: string, data?: any) {
     let options = this.createOptions(method, data);
     return this.http.request(url, options)

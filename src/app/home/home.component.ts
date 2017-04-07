@@ -14,4 +14,8 @@ export class HomeComponent implements OnInit {
   newSession(): void {
 
   }
+
+  findSession(): void {
+
+  }
 }

@@ -1,13 +1,17 @@
+import { HttpModule } from '@angular/http';
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { DataService } from './data.service';
 import { ErrorHandlerService } from './error-handler.service';
+import { RoundService } from './round.service';
+import { CourseService } from './course.service';
+import './rxjs-extensions';
+import { ScoringService } from './scoring.service';
 
 @NgModule({
   imports: [
-    CommonModule
+    HttpModule
   ],
   declarations: [],
-  providers: [DataService, ErrorHandlerService]
+  providers: [DataService, ErrorHandlerService, RoundService, CourseService, ScoringService]
 })
 export class AppCoreModule { }

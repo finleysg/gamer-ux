@@ -1,7 +1,23 @@
-<div>
-  <h1>The Gamer</h1>
-  <p>Main text</p>
-  <div>
-    <button md-raised-button (click)="newSession()">New Session</button>
-  </div>
+<div fxLayout="row" fxLayoutAlign="center none" >
+  <h1 class="mat-primary">Through the Green</h1>
+</div>
+<div fxLayout="row" fxLayoutAlign="center none" >
+  <h2 class="mat-accent">Scoring Assistant</h2>
+</div>
+<div class="push-down" fxLayout="row" fxLayoutAlign="center none" >
+  <h3>Start a new round now:</h3>
+</div>
+<div fxLayout="row" fxLayoutAlign="center none" >
+  <button md-raised-button [color]="'primary'" (click)="newSession()">New Round</button>
+</div>
+<div class="push-down" fxLayout="row" fxLayoutAlign="center none" >
+  <h4>Join a round:</h4>
+</div>
+<div fxLayout="row" fxLayoutAlign="center none" >
+  <md-input-container class="partial-width">
+    <input mdInput placeholder="Round Code" />
+  </md-input-container>
+</div>
+<div fxLayout="row" fxLayoutAlign="center none" >
+  <button md-raised-button [color]="'accent'" (click)="findSession()">Join Round</button>
 </div>
