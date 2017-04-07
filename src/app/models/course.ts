@@ -34,4 +34,13 @@ export class Course {
       'holes': holes
     }
   }
+
+  getHole(id: number): Hole {
+    return this.holes.find(h => h.id === id);
+  }
+
+  calculateHandicap(handicapIndex: number): number {
+    let handicap = (handicapIndex * this.slope) / 113;
+    return Math.round(handicap);
+  }
 }

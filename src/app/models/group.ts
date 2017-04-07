@@ -28,4 +28,8 @@ export class Group {
       'players': players
     }
   }
+
+  getPlayer(id: number): Player {
+    return this.players.find(p => p.id === id);
+  }
 }

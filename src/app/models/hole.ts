@@ -23,4 +23,13 @@ export class Hole {
       'handicap': this.handicap
     }
   }
+
+  // TODO: handle plus handicaps
+  getBumps(handicap: number): number {
+    let bumps = this.handicap <= handicap ? 1 : 0;
+    if (this.handicap > 18) {
+      bumps += this.handicap <= (handicap - 18) ? 1 : 0;
+    }
+    return bumps;
+  }
 }

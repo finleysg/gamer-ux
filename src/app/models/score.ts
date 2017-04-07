@@ -1,9 +1,14 @@
+import { Hole } from './hole';
+import { Player } from './player';
+
 export class Score {
   id: number;
   sessionId: number;
   playerId: number;
   holeId: number;
   grossScore: number;
+  player: Player;
+  hole: Hole;
 
   fromJson(json: any): Score {
     this.id = json.id;

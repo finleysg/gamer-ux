@@ -1,13 +1,13 @@
 export class Player {
   id: number;
   name: string;
-  handicap: number;
+  handicapIndex: number;
   groupId: number;
 
   fromJson(json: any): Player {
     this.id = json.id;
     this.name = json.name;
-    this.handicap = json.handicap;
+    this.handicapIndex = json.handicap;
     this.groupId = json.group;
     return this;
   }
@@ -16,7 +16,7 @@ export class Player {
     return {
       'id': this.id,
       'name': this.name,
-      'handicap': this.handicap,
+      'handicap': this.handicapIndex,
       'group': this.groupId
     }
   }

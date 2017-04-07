@@ -1,28 +1,30 @@
 import { Injectable } from '@angular/core';
-import { DataService } from './data.service';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
+import { DataService } from './data.service';
 import { Round } from '../models/round';
 import { Course } from '../models/course';
 import { Group } from '../models/group';
 import { Game } from '../models/game';
+import { Player } from '../models/player';
 
 @Injectable()
 export class RoundService {
 
   private _currentRound: Round;
-  private _currentRoundSource: BehaviorSubject<Round>;
-  public currentRound$: Observable<Round>;
-  private _currentHole: number;
-  private _currentHoleSource: BehaviorSubject<number>;
-  public currentHole$: Observable<number>;
+  private _currentRoundSource: Subject<Round>;
+  private _players: Player[]; // flattened list of players
 
   constructor(private dataService: DataService) {
-    this._currentRoundSource = new BehaviorSubject(new Round());
-    this.currentRound$ = this._currentRoundSource.asObservable();
-    this._currentHole = 1;
-    this._currentHoleSource = new BehaviorSubject(this._currentHole);
-    this.currentHole$ = this._currentHoleSource.asObservable();
+    this._currentRoundSource = new Subject<Round>();
+  }
+
+  get currentRound(): Observable<Round> {
+    return this._currentRoundSource.asObservable();
+  }
+
+  get players(): Player[] {
+    return this._players;
   }
 
   createRound(course: Course): Promise<void> {
@@ -33,7 +35,6 @@ export class RoundService {
       })
       .toPromise();
   }
-
 
   joinRound(code: string): Promise<boolean> {
     return this.dataService.getApiRequest('sessions', { 'code': code })
@@ -49,6 +50,7 @@ export class RoundService {
     this.dataService.getApiRequest(`sessions/${this._currentRound.id}`)
       .do((json: any) => {
         this._currentRound = new Round().fromJson(json);
+        this.flattenPlayerList();
         this._currentRoundSource.next(this._currentRound);
       });
   }
@@ -89,5 +91,12 @@ export class RoundService {
         this.reloadRound();
       })
       .toPromise();
+  }
+
+  private flattenPlayerList(): void {
+    this._players = [];
+    this._currentRound.groups.forEach((group: Group) => {
+      group.players.forEach((player: Player) => this._players.push(player));
+    });
   }
 }
