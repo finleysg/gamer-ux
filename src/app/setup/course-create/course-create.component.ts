@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { CourseService } from '../../core/course.service';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Course } from '../../models/course';
 
 @Component({
   selector: 'app-course-create',
@@ -7,9 +10,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CourseCreateComponent implements OnInit {
 
-  constructor() { }
+  newCourse: Course;
+
+  constructor(
+    private courseService: CourseService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) { }
 
   ngOnInit() {
+    this.newCourse = new Course();
+    this.newCourse.numberOfHoles = 18;
   }
 
+  onNext() {
+    this.courseService.createCourse(this.newCourse).then((id: number) => {
+      this.router.navigate(['edit', id.toString()], { relativeTo: this.route.parent });
+    });
+  }
 }

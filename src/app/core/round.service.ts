@@ -56,21 +56,16 @@ export class RoundService {
   }
 
   updateCourse(course: Course): void {
-    // TODO: patch round with course id
-    this._currentRound.course = course;
-    this._currentRoundSource.next(this._currentRound);
-  }
-
-  createGroup(group: Group): Promise<void> {
-    return this.dataService.postApiRequest('groups', group.toJson())
+    this.dataService.patchApiRequest(`sessions/${this._currentRound.id}`, { 'course': course.id })
       .do(() => {
         this.reloadRound();
-      })
-      .toPromise();
+      });
   }
 
-  updateGroup(group: Group): Promise<void> {
-    return this.dataService.putApiRequest(`groups/${group.id}`, group.toJson())
+  saveGroups(groups: Group[]): Promise<void> {
+    let json = [];
+    groups.forEach(g => json.push(g.toJson()));
+    return this.dataService.postApiRequest('groups', json)
       .do(() => {
         this.reloadRound();
       })

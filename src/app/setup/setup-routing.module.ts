@@ -8,7 +8,7 @@ import { GroupCreateComponent } from './group-create/group-create.component';
 const routes: Routes = [
   { path: 'course', component: CourseSelectComponent, children: [
     { path: 'create', component: CourseCreateComponent },
-    { path: 'edit', component: CourseEditComponent }
+    { path: 'edit/:id', component: CourseEditComponent }
   ]},
   { path: 'groups', component: GroupCreateComponent }
 ];

@@ -1,7 +1,8 @@
 export class Player {
   id: number;
+  localId: number; // to uniquely identify a player within a group
   name: string;
-  handicapIndex: number;
+  handicapIndex: number = 0.0;
   groupId: number;
 
   fromJson(json: any): Player {
