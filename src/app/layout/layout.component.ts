@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { RoundService } from '../core/round.service';
 
 @Component({
   selector: 'app-layout',
@@ -8,9 +9,20 @@ import { Router } from '@angular/router';
 })
 export class LayoutComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  title: string;
+
+  constructor(
+    private roundService: RoundService,
+    private router: Router
+  ) { }
 
   ngOnInit() {
+    this.roundService.currentRound.subscribe(round => {
+      this.title = '';
+      if (round.code) {
+        this.title = `Round ${round.code}`;
+      }
+    });
   }
 
 }

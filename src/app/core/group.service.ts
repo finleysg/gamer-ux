@@ -1,21 +1,21 @@
 import { Injectable } from '@angular/core';
 import { Group } from '../models/group';
 import { Player } from '../models/player';
-import { Round } from '../models/round';
 
 @Injectable()
 export class GroupService {
 
   constructor() { }
 
-  newGroup(round: Round): Group {
+  newGroup(roundId: number, groups: Group[]): void {
     let group = new Group();
-    group.number = round.groups.length + 1;
+    group.roundId = roundId;
+    group.number = groups.length + 1;
     for (let i = 0; i < 4; i++) {
       group.players.push(new Player());
       group.players[i].localId = Math.random();
     }
-    return group;
+    groups.push(group);
   }
 
   removeGroup(groupNumber: number, groups: Group[]): void {

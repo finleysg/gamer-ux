@@ -1,0 +1,47 @@
+<div fxLayout="row" fxLayoutAlign="center none" >
+  <h3>Groups and Players</h3>
+</div>
+<div class="m-t-15" *ngFor="let group of groups">
+  <div class="m-t-15" fxLayout="row" fxLayoutAlign="none center">
+    <div fxFlex="10">
+      <button *ngIf="group.number > 1" md-icon-button [color]="'warn'" (click)="removeGroup(group.number)"><md-icon>remove_circle</md-icon></button>
+    </div>
+    <div fxFlex>
+      Group {{ group.number }}
+    </div>
+  </div>
+  <div *ngFor="let player of group.players" fxLayout="row">
+    <div fxFlex="20">
+      <button md-icon-button [color]="'warn'" (click)="removePlayer(player.localId)"><md-icon>remove_circle</md-icon></button>
+    </div>
+    <div fxFlex="60">
+      <md-input-container class="w-8">
+        <input mdInput [(ngModel)]="player.name" placeholder="player" floatPlaceholder="never" />
+      </md-input-container>
+    </div>
+    <div fxFlex>
+      <md-input-container class="w-8">
+        <input mdInput [(ngModel)]="player.handicapIndex" placeholder="hcp" />
+      </md-input-container>
+    </div>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="none center" *ngIf="group.players.length < 5">
+    <div fxFlex="10">
+      <button md-icon-button [color]="'accent'" (click)="addPlayer(group)"><md-icon>add_circle</md-icon></button>
+    </div>
+    <div fxFlex>
+      Add player
+    </div>
+  </div>
+</div>
+<div class="m-t-15" fxLayout="row" fxLayoutAlign="none center">
+  <div fxFlex="10">
+    <button md-icon-button [color]="'accent'" (click)="addGroup()"><md-icon>add_circle</md-icon></button>
+  </div>
+  <div fxFlex>
+    Add group
+  </div>
+</div>
+<div class="m-t-30" fxLayout="row" fxLayoutAlign="center none" >
+  <button md-raised-button [color]="'primary'" (click)="onNext()">Save</button>
+</div>

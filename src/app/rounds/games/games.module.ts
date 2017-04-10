@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
-
-import { SharedModule } from '../shared/shared.module';
-import { GamesRoutingModule } from './games-routing.module';
+import { SharedModule } from '../../shared/shared.module';
 import { GameCreateComponent } from './game-create/game-create.component';
 import { GameIndividualComponent } from './game-individual/game-individual.component';
 import { GameTeamComponent } from './game-team/game-team.component';
@@ -11,8 +9,7 @@ import { GamesComponent } from './games.component';
 
 @NgModule({
   imports: [
-    SharedModule,
-    GamesRoutingModule
+    SharedModule
   ],
   declarations: [GameCreateComponent, GameIndividualComponent, GameTeamComponent, GameResultsComponent, GameResultComponent, GamesComponent]
 })

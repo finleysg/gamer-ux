@@ -1,2 +1,37 @@
 /* You can add global styles to this file, and also import other style files */
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
+.w-3 {
+  width: 33%;
+}
+.w-5 {
+  width: 50%;
+}
+.w-8 {
+  width: 80%;
+}
+.w-full {
+  width: 100%;
+}
+
+.m-t-15 {
+  margin-top: 15px;
+}
+.m-t-30 {
+  margin-top: 30px;
+}
+.m-t-50 {
+  margin-top: 50px;
+}
+.m-t-70 {
+  margin-top: 70px;
+}
+.m-l-10 {
+  margin-left: 10px;
+}
+.m-l-15 {
+  margin-left: 15px;
+}
+.m-l-20 {
+  margin-left: 20px;
+}

@@ -3,13 +3,13 @@ import { Player } from './player';
 export class Group {
   id: number;
   number: number;
-  sessionId: number;
+  roundId: number;
   players: Player[] = [];
 
   fromJson(json: any): Group {
     this.id = json.id;
     this.number = json.group_number;
-    this.sessionId = json.session;
+    this.roundId = json.round;
     if (json.players) {
       json.players.forEach(player => {
         this.players.push(new Player().fromJson(player));
@@ -24,7 +24,7 @@ export class Group {
     return {
       'id': this.id,
       'group_number': this.number,
-      'session': this.sessionId,
+      'round': this.roundId,
       'players': players
     }
   }

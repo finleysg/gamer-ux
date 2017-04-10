@@ -6,11 +6,11 @@ import { RoundService } from '../../core/round.service';
 import { Course } from '../../models/course';
 
 @Component({
-  selector: 'app-course-edit',
-  templateUrl: './course-edit.component.html',
-  styleUrls: ['./course-edit.component.css']
+  selector: 'app-course-holes',
+  templateUrl: './course-holes.component.html',
+  styleUrls: ['./course-holes.component.css']
 })
-export class CourseEditComponent implements OnInit, OnDestroy {
+export class CourseHolesComponent implements OnInit, OnDestroy {
 
   course: Course;
   private subscription: Subscription;

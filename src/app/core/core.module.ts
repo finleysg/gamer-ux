@@ -7,12 +7,13 @@ import { CourseService } from './course.service';
 import './rxjs-extensions';
 import { ScoringService } from './scoring.service';
 import { GroupService } from './group.service';
+import { RoundResolverService } from './round-resolver.service';
 
 @NgModule({
   imports: [
     HttpModule
   ],
   declarations: [],
-  providers: [DataService, ErrorHandlerService, RoundService, CourseService, ScoringService, GroupService]
+  providers: [DataService, ErrorHandlerService, RoundService, CourseService, ScoringService, GroupService, RoundResolverService]
 })
 export class AppCoreModule { }

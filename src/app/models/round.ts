@@ -2,9 +2,6 @@ import { Course } from './course';
 import { Group } from './group';
 
 export class Round {
-/*
- ("id", "code", "created",  "expires", "course", "groups", "games", "scores", )
- */
   id: number;
   code: string;
   created: any; // TODO: moment
@@ -26,5 +23,15 @@ export class Round {
       });
     }
     return this;
+  }
+
+  // Only the course is directly editable on a Round - everything else is derived or calculated
+  // Sending just enough to pass that validator
+  toJson(): any {
+    return {
+      'code': '',
+      'expires': null,
+      'course': this.course.id,
+    }
   }
 }

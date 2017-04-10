@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Group } from '../../models/group';
-import { Router } from '@angular/router';
-import { Subscription } from 'rxjs/Subscription';
+import { Router, ActivatedRoute } from '@angular/router';
 import { cloneDeep } from 'lodash';
 import { RoundService } from '../../core/round.service';
 import { GroupService } from '../../core/group.service';
@@ -16,27 +15,28 @@ export class GroupCreateComponent implements OnInit {
 
   round: Round;
   groups: Group[];
-  private subscription: Subscription;
 
   constructor(
     private roundService: RoundService,
     private groupService: GroupService,
+    private route: ActivatedRoute,
     private router: Router
   ) { }
 
   ngOnInit() {
-    this.subscription = this.roundService.currentRound.subscribe(round => {
-      this.round = round;
-      this.groups = cloneDeep(round.groups);
-    });
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.route.data
+      .subscribe((data: {round: Round}) => {
+        this.round = data.round;
+        this.groups = cloneDeep(this.round.groups);
+        // Don't make the user add the first group
+        if (this.groups.length === 0) {
+          this.groupService.newGroup(this.round.id, this.groups);
+        }
+      });
   }
 
   addGroup(): void {
-    this.groups.push(this.groupService.newGroup(this.round));
+    this.groupService.newGroup(this.round.id, this.groups);
   }
 
   removeGroup(groupNumber: number): void {
@@ -53,7 +53,7 @@ export class GroupCreateComponent implements OnInit {
 
   onNext(): void {
     this.roundService.saveGroups(this.groups).then(() => {
-      this.router.navigate(['/games']);
+      this.router.navigate(['games'], { relativeTo: this.route.parent });
     });
   }
 }

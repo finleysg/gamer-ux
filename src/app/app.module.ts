@@ -6,15 +6,12 @@ import { AppCoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { LayoutModule } from './layout/layout.module';
 import { AppRoutingModule } from './app-routing.module';
-import { HomeComponent } from './home/home.component';
-import { SetupModule } from './setup/setup.module';
-import { GamesModule } from './games/games.module';
-import { ScoringModule } from './scoring/scoring.module';
+import { CoursesModule } from './courses/courses.module';
+import { RoundsModule } from './rounds/rounds.module';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    HomeComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -22,9 +19,8 @@ import { ScoringModule } from './scoring/scoring.module';
     AppCoreModule,
     SharedModule,
     LayoutModule,
-    SetupModule,
-    GamesModule,
-    ScoringModule
+    CoursesModule,
+    RoundsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

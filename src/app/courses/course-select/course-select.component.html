@@ -1,0 +1,14 @@
+<div class="m-t-30" fxLayout="row" fxLayoutAlign="center none" >
+  <h3>Select or Create a Course</h3>
+</div>
+<div class="m-t-50" fxLayout="row" fxLayoutAlign="center none" >
+  <md-select [(ngModel)]="selectedCourse" class="w-8" placeholder="Available Courses">
+    <md-option *ngFor="let course of courses" [value]="course">{{course.name}}</md-option>
+  </md-select>
+</div>
+<div class="m-t-30" fxLayout="row" fxLayoutAlign="center none" >
+  <button md-raised-button [color]="'primary'" (click)="onNext()">Next</button>
+</div>
+<div class="m-t-50" fxLayout="row" fxLayoutAlign="center none" >
+  <button md-raised-button [color]="'accent'" (click)="onNew()">New Course</button>
+</div>
