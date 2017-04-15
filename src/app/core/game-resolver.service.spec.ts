@@ -1,26 +1,26 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { Injectable } from '@angular/core';
 
+import { GameResolverService } from './game-resolver.service';
 import { RoundService } from './round.service';
-import { DataService } from './data.service';
 
-describe('RoundService', () => {
+describe('GameResolverService', () => {
 
   @Injectable()
-  class DataServiceSpy {
+  class RoundServiceSpy {
     // TODO: some sort of universal spy/fixture
   }
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        RoundService,
-        { provide: DataService, useClass: DataServiceSpy }
+        GameResolverService,
+        { provide: RoundService, useClass: RoundServiceSpy }
       ]
     });
   });
 
-  it('should ...', inject([RoundService], (service: RoundService) => {
+  it('should ...', inject([GameResolverService], (service: GameResolverService) => {
     expect(service).toBeTruthy();
   }));
 });

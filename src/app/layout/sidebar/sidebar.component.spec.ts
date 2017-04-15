@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MaterialModule } from '@angular/material';
+import { Router } from '@angular/router';
 
 import { SidebarComponent } from './sidebar.component';
+import { RouterStub } from '../../testing/router-stubs';
 
 describe('SidebarComponent', () => {
   let component: SidebarComponent;
@@ -8,6 +11,10 @@ describe('SidebarComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [ MaterialModule ],
+      providers: [
+        { provide: Router, useClass: RouterStub }
+      ],
       declarations: [ SidebarComponent ]
     })
     .compileComponents();

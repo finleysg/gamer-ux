@@ -1,0 +1,77 @@
+[
+  {
+    "id": 1,
+    "round": 1,
+    "group_number": 1,
+    "players": [
+      {
+        "id": 1,
+        "name": "DJ",
+        "handicap": 0,
+        "group": 1
+      },
+      {
+        "id": 2,
+        "name": "Jim",
+        "handicap": 0,
+        "group": 1
+      },
+      {
+        "id": 3,
+        "name": "Scott",
+        "handicap": 0,
+        "group": 1
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "round": 1,
+    "group_number": 2,
+    "players": [
+      {
+        "id": 6,
+        "name": "Branden",
+        "handicap": 0,
+        "group": 2
+      },
+      {
+        "id": 7,
+        "name": "Kevin N",
+        "handicap": 0,
+        "group": 2
+      },
+      {
+        "id": 8,
+        "name": "Duffner",
+        "handicap": 0,
+        "group": 2
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "round": 1,
+    "group_number": 3,
+    "players": [
+      {
+        "id": 11,
+        "name": "Dan",
+        "handicap": 0,
+        "group": 3
+      },
+      {
+        "id": 12,
+        "name": "David",
+        "handicap": 0,
+        "group": 3
+      },
+      {
+        "id": 13,
+        "name": "Brooks",
+        "handicap": 0,
+        "group": 3
+      }
+    ]
+  }
+]

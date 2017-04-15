@@ -41,7 +41,7 @@ export class LeaderboardPlayer {
       hole.holeNumber = score.hole.holeNumber;
       hole.par = score.hole.par;
       hole.gross = score.grossScore;
-      hole.net = score.grossScore - score.hole.getBumps(this.courseHandicap);
+      hole.net = score.grossScore - score.hole.getBumps(this.courseHandicap, 18);  // TODO: need number of holes
       this.totalScore += hole.gross;
       this.totalNetScore += hole.net;
       this.relativeScore += (hole.gross - score.hole.par)

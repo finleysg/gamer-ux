@@ -63,7 +63,7 @@ export class ScoringService {
       scores = [];
       group.players.forEach((player: Player) => {
         let score = new Score();
-        score.sessionId = this._currentRound.id;
+        score.roundId = this._currentRound.id;
         score.holeId = hole.id;
         score.playerId = player.id;
         score.grossScore = hole.par;
@@ -87,6 +87,11 @@ export class ScoringService {
       .do(() => {
         this.reloadScores();
       });
+  }
+
+  calculateEsc(score: Score): number {
+    // TODO: based on handicap and current hole
+    return score.hole.par + 2;
   }
 
   private refreshLeaderboard(): void {

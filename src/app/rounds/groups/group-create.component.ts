@@ -53,7 +53,7 @@ export class GroupCreateComponent implements OnInit {
 
   onNext(): void {
     this.roundService.saveGroups(this.groups).then(() => {
-      this.router.navigate(['games'], { relativeTo: this.route.parent });
+      this.router.navigate(['gameTypes'], { relativeTo: this.route.parent });
     });
   }
 }

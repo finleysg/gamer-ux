@@ -96,10 +96,14 @@ export class RoundService {
       .toPromise();
   }
 
-  createGame(game: Game): Promise<void> {
-    return this.dataService.postApiRequest('games', game.toJson())
-      .do(() => {
+  createGame(isTeam: boolean): Promise<Game> {
+    let game = new Game();
+    game.roundId = this._currentRound.id;
+    game.isTeam = isTeam;
+    return this.dataService.postApiRequest('gameTypes', game.toJson())
+      .map((json) => {
         this.reloadRound();
+        return new Game().fromJson(json);
       })
       .toPromise();
   }
