@@ -1,14 +1,22 @@
 import { NgModule } from '@angular/core';
-import { SharedModule } from '../../shared/shared.module';
+
+import { ScoringRoutingModule } from './scoring-routing.module';
+import { SharedModule } from '../shared/shared.module';
 import { GroupScoreComponent } from './group-score/group-score.component';
 import { LeaderboardComponent } from './leaderboard/leaderboard.component';
 import { SkinService } from './skin.service';
 
 @NgModule({
   imports: [
-    SharedModule
+    SharedModule,
+    ScoringRoutingModule
   ],
-  declarations: [GroupScoreComponent, LeaderboardComponent],
-  providers: [SkinService]
+  providers: [
+    SkinService
+  ],
+  declarations: [
+    GroupScoreComponent,
+    LeaderboardComponent
+  ]
 })
 export class ScoringModule { }

@@ -1,0 +1,113 @@
+<div fxFlex *ngIf="game">
+  <div fxLayout="row" fxLayoutAlign="center none" >
+    <h3>Game Setup</h3>
+  </div>
+  <div class="m-t-30" fxLayout="row" fxLayoutAlign="none center" >
+    <md-select [(ngModel)]="game.gameType" (change)="updateScoringTypes()" class="w-8 m-l-20" placeholder="Select a game">
+      <md-option *ngFor="let gameType of gameTypes" [value]="gameType">{{gameType}}</md-option>
+    </md-select>
+  </div>
+  <div class="m-t-30" fxLayout="row" fxLayoutAlign="none center" >
+    <md-select [(ngModel)]="game.scoringType" class="w-8 m-l-20" placeholder="Scoring System">
+      <md-option *ngFor="let scoringType of scoringTypes" [value]="scoringType">{{scoringType}}</md-option>
+    </md-select>
+  </div>
+  <div class="m-t-30" fxLayout="row" fxLayoutAlign="none center" >
+    <md-input-container class="m-l-20 w-5">
+      <input mdInput placeholder="Bet/Buy-in/Point Value" [(ngModel)]="game.betValue" (change)="updatePayouts()" />
+    </md-input-container>
+  </div>
+  <div *ngIf="game.scoringType === 'Payouts'">
+    <div fxLayout="row" fxLayoutAlign="center none">
+      <h4>Payouts</h4>
+    </div>
+    <div class="m-t-15" fxLayout="row" fxLayoutAlign="none center" *ngFor="let payout of game.payouts">
+      <div fxFlex="10">
+        <button md-icon-button [color]="'warn'" (click)="removePayout(payout)"><md-icon>remove_circle</md-icon></button>
+      </div>
+      <div fxFlex="20">
+        {{displayPlace(payout.place)}}
+      </div>
+      <div fxFlex="20">
+        <md-input-container class="w-8">
+          <input mdInput placeholder="%" [(ngModel)]="payout.percentage" (change)="updatePayouts()" />
+        </md-input-container>
+      </div>
+      <div fxFlex="30">
+        <md-input-container class="w-8">
+          <input mdInput placeholder="$" [(ngModel)]="payout.amount" />
+        </md-input-container>
+      </div>
+    </div>
+    <div class="m-t-15" fxLayout="row" fxLayoutAlign="none center">
+      <div fxFlex="10">
+        <button md-icon-button [color]="'accent'" (click)="addPayout()"><md-icon>add_circle</md-icon></button>
+      </div>
+      <div fxFlex>
+        Add a payout (1st, 2nd, ...)
+      </div>
+    </div>
+  </div>
+  <div class="m-t-30" fxLayout="row" fxLayoutAlign="none center">
+    <md-checkbox class="m-l-20" [(ngModel)]="game.isNet" (change)="refresh()">Use Handicaps (Net)</md-checkbox>
+  </div>
+  <div>
+    <div fxLayout="row" fxLayoutAlign="center none">
+      <h4>Teams</h4>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="center none" *ngIf="round.groups.length > 1">
+      <button md-raised-button [color]="'accent'" [disabled]="teamsAreGroups" (click)="assignByGroups()">Teams are Groups</button>
+    </div>
+    <div *ngFor="let teamNumber of teams">
+      <h5 class="m-l-20">Team {{teamNumber}}</h5>
+      <div fxLayout="row" fxLayoutAlign="none center" *ngFor="let team of game.teams | teamFilter: teamNumber">
+        <div class="m-l-20" fxFlex="50">
+          <md-select [(ngModel)]="team.playerId" (change)="refresh()" class="w-8 m-l-20" placeholder="Player">
+            <md-option *ngFor="let player of availablePlayers[team.localId]" [value]="player.id">{{player.name}}</md-option>
+          </md-select>
+        </div>
+        <div fxFlex>
+          <md-input-container class="w-3">
+            <input mdInput placeholder="Shots" [(ngModel)]="team.strokes" />
+          </md-input-container>
+        </div>
+      </div>
+      <div class="m-t-15" fxLayout="row" fxLayoutAlign="none center">
+        <div fxFlex="10">
+          <button md-icon-button [color]="'accent'" (click)="addPlayer(teamNumber)"><md-icon>add_circle</md-icon></button>
+        </div>
+        <div fxFlex="40">
+          Add player
+        </div>
+        <div fxFlex="10">
+          <button md-icon-button [color]="'warn'" (click)="removePlayer(teamNumber)"><md-icon>remove_circle</md-icon></button>
+        </div>
+        <div fxFlex="40">
+          Remove player
+        </div>
+      </div>
+    </div>
+    <div class="m-t-15" fxLayout="row" fxLayoutAlign="none center">
+      <div fxFlex="10">
+        <button md-icon-button [color]="'accent'" (click)="addTeam()"><md-icon>add_circle</md-icon></button>
+      </div>
+      <div fxFlex="40">
+        Add team
+      </div>
+      <div fxFlex="10">
+        <button md-icon-button [color]="'warn'" (click)="removeTeam()"><md-icon>remove_circle</md-icon></button>
+      </div>
+      <div fxFlex="40">
+        Remove team
+      </div>
+    </div>
+  </div>
+  <div class="m-t-30" fxLayout="row" fxLayoutAlign="none center" >
+    <md-input-container class="m-l-20 w-8">
+      <input mdInput placeholder="Name" [(ngModel)]="game.name" />
+    </md-input-container>
+  </div>
+  <div class="m-t-30" fxLayout="row" fxLayoutAlign="center none" >
+    <button md-raised-button [color]="'primary'" (click)="save()">Save</button>
+  </div>
+</div>

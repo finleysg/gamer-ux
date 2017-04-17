@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MdSnackBar } from '@angular/material';
-import { RoundService } from '../../core/round.service';
+import { RoundService } from '../core/round.service';
+import { Round } from '../models/round';
 
 @Component({
   templateUrl: './home.component.html',
@@ -9,7 +10,7 @@ import { RoundService } from '../../core/round.service';
 })
 export class HomeComponent implements OnInit {
 
-  sessionCode: string;
+  roundCode: string;
 
   constructor(
     private roundService: RoundService,
@@ -20,21 +21,20 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
   }
 
-  newSession(): void {
+  newRound(): void {
     this.router.navigate(['courses/select']);
   }
 
-  findSession(): void {
-    if (!this.sessionCode || this.sessionCode.length < 5) {
+  findRound(): void {
+    if (!this.roundCode || this.roundCode.length < 5) {
       return;
     }
-    this.roundService.joinRound(this.sessionCode)
-      .then((found: boolean) => {
-        if (found) {
-          this.router.navigate(['rounds', this.sessionCode.toLowerCase(), 'summary']);
+    this.roundService.loadRound(this.roundCode)
+      .then((round: Round) => {
+        if (round) {
+          this.router.navigate(['setup', this.roundCode.toLowerCase(), 'summary']);
         } else {
-          this.snackBar.open(`${this.sessionCode} does not exist`, '', { duration: 5000 });
-          //this.sessionCode = '';
+          this.snackBar.open(`${this.roundCode} does not exist`, '', { duration: 5000 });
         }
       })
       .catch((err) => {

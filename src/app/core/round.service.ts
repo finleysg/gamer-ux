@@ -1,22 +1,30 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs/Subject';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { DataService } from './data.service';
+import { CourseService } from './course.service';
 import { Round } from '../models/round';
 import { Course } from '../models/course';
 import { Group } from '../models/group';
 import { Game } from '../models/game';
 import { Player } from '../models/player';
+import { cloneDeep } from 'lodash';
 
 @Injectable()
 export class RoundService {
 
   private _currentRound: Round;
-  private _currentRoundSource: Subject<Round>;
+  private _currentRoundSource: BehaviorSubject<Round>;
   private _players: Player[]; // flattened list of players
+  currentRound$: Observable<Round>;
 
-  constructor(private dataService: DataService) {
-    this._currentRoundSource = new Subject<Round>();
+  constructor(
+    private courseService: CourseService,
+    private dataService: DataService
+  ) {
+    this._currentRound = new Round();
+    this._currentRoundSource = new BehaviorSubject<Round>(this._currentRound);
+    this.currentRound$ = this._currentRoundSource.asObservable();
   }
 
   get round(): Round {
@@ -34,49 +42,48 @@ export class RoundService {
   createRound(course: Course): Promise<Round> {
     let round = new Round();
     round.course = course;
-    return this.dataService.postApiRequest('rounds', round.toJson())
-      .do((json: any) => {
+    return this.dataService.postApiRequest('rounds', round.toJson()).toPromise()
+      .then((json: any) => {
         this._currentRound = new Round().fromJson(json);
-        this._currentRoundSource.next(this._currentRound);
+        this._currentRound.course = course;
+        this._currentRoundSource.next(cloneDeep(this._currentRound));
         return this._currentRound;
-      })
-      .toPromise();
-  }
-
-  joinRound(code: string): Promise<boolean> {
-    return this.dataService.getApiRequest('rounds', { 'code': code })
-      .map((json: any) => {
-        if (!json || json.length === 0) {
-          return false;
-        } else {
-          this._currentRound = new Round().fromJson(json[0]);
-          this._currentRoundSource.next(this._currentRound);
-          return true;
-        }
-      })
-      .toPromise();
+      });
   }
 
   loadRound(code: string): Promise<Round> {
-    return this.dataService.getApiRequest('rounds', { 'code': code })
-      .map((json: any) => {
+    return this.dataService.getApiRequest('rounds', { 'code': code }).toPromise()
+      .then((json: any) => {
         if (!json || json.length === 0) {
-          this._currentRound = new Round();
+          return null;
+        } else {
+          this._currentRound = new Round().fromJson(json[0]);
+          this.flattenPlayerList();
+          return this.courseService.getCourse(this._currentRound.course.id);
         }
-        this._currentRound = new Round().fromJson(json[0]);
-        this._currentRoundSource.next(this._currentRound);
-        return this._currentRound;
       })
-      .toPromise();
+      .then(json => {
+        if (!json) {
+          return null;
+        }
+        this._currentRound.course = new Course().fromJson(json);
+        this._currentRoundSource.next(cloneDeep(this._currentRound));
+        return this._currentRound;
+      });
+
   }
 
   reloadRound(): void {
+    let course = this._currentRound.course;
     this.dataService.getApiRequest(`rounds/${this._currentRound.id}`)
       .do((json: any) => {
         this._currentRound = new Round().fromJson(json);
+        this._currentRound.course = course;
         this.flattenPlayerList();
-        this._currentRoundSource.next(this._currentRound);
-      });
+        console.log(`RoundService: round ${this._currentRound.code}, ${this._currentRound.games.length} games`);
+        this._currentRoundSource.next(cloneDeep(this._currentRound));
+      })
+      .subscribe();
   }
 
   updateCourse(course: Course): void {
@@ -100,9 +107,9 @@ export class RoundService {
     let game = new Game();
     game.roundId = this._currentRound.id;
     game.isTeam = isTeam;
-    return this.dataService.postApiRequest('gameTypes', game.toJson())
+    return this.dataService.postApiRequest('games', game.toJson())
       .map((json) => {
-        this.reloadRound();
+        // this.reloadRound();
         return new Game().fromJson(json);
       })
       .toPromise();
@@ -114,6 +121,13 @@ export class RoundService {
         this.reloadRound();
       })
       .toPromise();
+  }
+
+  deleteGame(game: Game): void {
+    this.dataService.deleteApiRequest('games', game.id)
+      .do(() => {
+        this.reloadRound();
+      });
   }
 
   private flattenPlayerList(): void {

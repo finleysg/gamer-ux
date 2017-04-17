@@ -29,7 +29,7 @@ export class CourseSelectComponent implements OnInit {
     if (this.selectedCourse) {
       this.roundService.createRound(this.selectedCourse)
         .then(round => {
-          this.router.navigate(['rounds', round.code.toLowerCase(), 'groups']);
+          this.router.navigate(['setup', round.code.toLowerCase(), 'groups']);
         });
     }
   }

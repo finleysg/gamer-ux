@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { RouterModule }  from '@angular/router';
 
 import { LayoutComponent } from './layout.component';
 import { SharedModule } from '../shared/shared.module';
@@ -7,8 +6,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 
 @NgModule({
   imports: [
-    SharedModule,
-    RouterModule
+    SharedModule
   ],
   declarations: [LayoutComponent, SidebarComponent],
   exports: [LayoutComponent]

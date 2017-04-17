@@ -24,8 +24,8 @@ export class CourseCreateComponent implements OnInit {
   }
 
   onNext() {
-    this.courseService.createCourse(this.newCourse).then((id: number) => {
-      this.router.navigate(['edit', id.toString()], { relativeTo: this.route.parent });
+    this.courseService.createCourse(this.newCourse).then((course: Course) => {
+      this.router.navigate(['edit', course.id.toString()], { relativeTo: this.route.parent });
     });
   }
 }

@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
-import { RoundService } from '../../../core/round.service';
-import { ScoringService } from '../../../core/scoring.service';
-import { Round } from '../../../models/round';
-import { Group } from '../../../models/group';
-import { Hole } from '../../../models/hole';
-import { Score } from '../../../models/score';
+import { RoundService } from '../../core/round.service';
+import { ScoringService } from '../../core/scoring.service';
+import { Round } from '../../models/round';
+import { Group } from '../../models/group';
+import { Hole } from '../../models/hole';
+import { Score } from '../../models/score';
 import { cloneDeep } from 'lodash';
 
 @Component({

@@ -44,6 +44,11 @@ export class DataService {
     return this.request(RequestMethod.Patch, url, data);
   }
 
+  deleteApiRequest(resource: string, id: number): Observable<any> {
+    const url: string = this._apiUrl + resource + '/' + id;
+    return this.request(RequestMethod.Delete, url);
+  }
+
   request(method: RequestMethod, url: string, data?: any) {
     let options = this.createOptions(method, data);
     return this.http.request(url, options)

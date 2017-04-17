@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core';
 import { DataService } from './data.service';
 import { Course } from '../models/course';
-import { RoundService } from './round.service';
 
 @Injectable()
 export class CourseService {
 
   constructor(
-    private roundService: RoundService,
     private dataService: DataService
   ) {
   }
@@ -22,21 +20,26 @@ export class CourseService {
       .toPromise();
   }
 
-  createCourse(course: Course): Promise<number> {
-    return this.dataService.postApiRequest('courses', course.toJson())
+  getCourse(id: number): Promise<Course> {
+    return this.dataService.getApiRequest(`courses/${id}`)
       .map((json: any) => {
-        const course = new Course().fromJson(json);
-        this.roundService.updateCourse(course);
-        return course.id;
+        return new Course().fromJson(json);
       })
       .toPromise();
   }
 
-  updateCourse(course: Course): Promise<void> {
+  createCourse(course: Course): Promise<Course> {
+    return this.dataService.postApiRequest('courses', course.toJson())
+      .map((json: any) => {
+        return new Course().fromJson(json);
+      })
+      .toPromise();
+  }
+
+  updateCourse(course: Course): Promise<Course> {
     return this.dataService.putApiRequest(`courses/${course.id}`, course.toJson())
-      .do((json: any) => {
-        const course = new Course().fromJson(json);
-        this.roundService.reloadRound();
+      .map((json: any) => {
+        return new Course().fromJson(json);
       })
       .toPromise();
   }

@@ -1,5 +1,6 @@
 import { Course } from './course';
 import { Group } from './group';
+import { Game } from './game';
 
 export class Round {
   id: number;
@@ -8,18 +9,26 @@ export class Round {
   expires: any; // TODO: moment
   course: Course;
   groups: Group[] = [];
-  games: any[];
+  games: Game[] = [];
   scores: any[];
 
   fromJson(json: any): Round {
+    // only serializing a course id
+    let course = new Course();
+    course.id = json.course;
     this.id = json.id;
+    this.course = course;
     this.code = json.code;
-    this.created = json.number_of_holes;
+    this.created = json.created;
     this.expires = json.expires;
-    this.course = new Course().fromJson(json.course);
     if (json.groups) {
       json.groups.forEach(group => {
         this.groups.push(new Group().fromJson(group));
+      });
+    }
+    if (json.games) {
+      json.games.forEach(game => {
+        this.games.push(new Game().fromJson(game));
       });
     }
     return this;
@@ -31,7 +40,7 @@ export class Round {
     return {
       'code': '',
       'expires': null,
-      'course': this.course.id,
+      'course': this.course.id
     }
   }
 }

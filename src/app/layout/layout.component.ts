@@ -17,7 +17,7 @@ export class LayoutComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.roundService.currentRound.subscribe(round => {
+    this.roundService.currentRound$.subscribe(round => {
       this.title = '';
       if (round.code) {
         this.title = `Round ${round.code}`;

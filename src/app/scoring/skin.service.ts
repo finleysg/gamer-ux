@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Game } from '../../models/game';
-import { Score, Skin } from '../../models/score';
-import { RoundService } from '../../core/round.service';
+
+import { Game } from '../models/game';
+import { Score, Skin } from '../models/score';
+import { RoundService } from '../core/round.service';
 
 @Injectable()
 export class SkinService {

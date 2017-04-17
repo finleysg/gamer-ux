@@ -7,11 +7,15 @@ import { SharedModule } from './shared/shared.module';
 import { LayoutModule } from './layout/layout.module';
 import { AppRoutingModule } from './app-routing.module';
 import { CoursesModule } from './courses/courses.module';
-import { RoundsModule } from './rounds/rounds.module';
+import { SetupModule } from './setup/setup.module';
+import { ScoringModule } from './scoring/scoring.module';
+import { ResultsModule } from './results/results.module';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -20,7 +24,9 @@ import { RoundsModule } from './rounds/rounds.module';
     SharedModule,
     LayoutModule,
     CoursesModule,
-    RoundsModule
+    SetupModule,
+    ScoringModule,
+    ResultsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

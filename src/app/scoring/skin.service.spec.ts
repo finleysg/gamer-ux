@@ -1,8 +1,8 @@
 import { SkinService } from './skin.service';
-import { RoundService } from '../../core/round.service';
-import { Round } from '../../models/round';
-import { CourseFixture } from '../../testing/fixtures/course-fixture';
-import { ScoreFixture } from '../../testing/fixtures/scores-fixture';
+import { RoundService } from '../core/round.service';
+import { Round } from '../models/round';
+import { CourseFixture } from '../testing/fixtures/course-fixture';
+import { ScoreFixture } from '../testing/fixtures/scores-fixture';
 
 describe('SkinService', () => {
 

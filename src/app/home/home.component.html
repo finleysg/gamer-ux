@@ -8,16 +8,16 @@
   <h3>Start a new round now:</h3>
 </div>
 <div fxLayout="row" fxLayoutAlign="center none" >
-  <button md-raised-button [color]="'primary'" (click)="newSession()">New Round</button>
+  <button md-raised-button [color]="'primary'" (click)="newRound()">New Round</button>
 </div>
 <div class="push-down" fxLayout="row" fxLayoutAlign="center none" >
   <h4>Join a round:</h4>
 </div>
 <div fxLayout="row" fxLayoutAlign="center none" >
   <md-input-container class="partial-width">
-    <input mdInput placeholder="Round Code" [(ngModel)]="sessionCode" />
+    <input mdInput placeholder="Round Code" [(ngModel)]="roundCode" />
   </md-input-container>
 </div>
 <div fxLayout="row" fxLayoutAlign="center none" >
-  <button md-raised-button [color]="'accent'" (click)="findSession()">Join Round</button>
+  <button md-raised-button [color]="'accent'" (click)="findRound()">Join Round</button>
 </div>

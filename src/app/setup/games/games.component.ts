@@ -29,24 +29,26 @@ export class GamesComponent implements OnInit {
       });
   }
 
-  // editGame(game: Game): void {
-  //   let page = game.isTeam ? 'team' : 'individual';
-  //   this.router.navigate([game.id, page]);
-  // }
-
   removeGame(game: Game): void {
-
+    // TODO: get confirmation
+    this.roundService.deleteGame(game);
   }
 
   newIndividualGame(): void {
     this.roundService.createGame(false).then((game) => {
-      this.router.navigate([game.id, 'individual']);
+      this.router.navigate(['individual-game'], { relativeTo: this.route.parent, queryParams: { id: game.id } })
     });
   }
 
   newTeamGame(): void {
     this.roundService.createGame(true).then((game) => {
-      this.router.navigate([game.id, 'team']);
+      this.router.navigate(['team-game'], { relativeTo: this.route.parent, queryParams: { id: game.id } })
+    });
+  }
+
+  newMatch(): void {
+    this.roundService.createGame(true).then((game) => {
+      this.router.navigate(['match-game'], { relativeTo: this.route.parent, queryParams: { id: game.id } })
     });
   }
 
