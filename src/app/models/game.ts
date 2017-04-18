@@ -4,7 +4,7 @@ export class Game {
   id: number;
   name: string;
   isNet: boolean;
-  isTeam: boolean;
+  competitionType: string;
   gameType: string;
   scoringType: string;
   numberOfScores: number;
@@ -16,9 +16,10 @@ export class Game {
   fromJson(json): Game {
     this.id = json.id;
     this.isNet = json.is_net;
-    this.isTeam = json.is_team;
+    this.competitionType = json.competition_type;
     this.gameType = json.game_type;
     this.scoringType = json.scoring_type;
+    this.numberOfScores = json.number_of_scores;
     this.betValue = json.bet_value;
     this.roundId = json.round;
     if (json.teams) {
@@ -43,9 +44,10 @@ export class Game {
       'id': this.id,
       'round': this.roundId,
       'is_net': this.isNet,
-      'is_team': this.isTeam,
+      'competition_type': this.competitionType,
       'game_type': this.gameType,
       'scoring_type': this.scoringType,
+      'number_of_scores': this.numberOfScores,
       'bet_value': this.betValue,
       'teams': teams,
       'payouts': payouts

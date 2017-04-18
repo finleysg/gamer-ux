@@ -1,6 +1,6 @@
 <div fxFlex *ngIf="game">
   <div fxLayout="row" fxLayoutAlign="center none" >
-    <h3>Game Setup</h3>
+    <h3>Game/Match Setup</h3>
   </div>
   <div class="m-t-30" fxLayout="row" fxLayoutAlign="none center" >
     <md-select [(ngModel)]="game.gameType" (change)="updateScoringTypes()" class="w-8 m-l-20" placeholder="Select a game">
@@ -14,7 +14,7 @@
   </div>
   <div class="m-t-30" fxLayout="row" fxLayoutAlign="none center" >
     <md-input-container class="m-l-20 w-5">
-      <input mdInput placeholder="Bet/Buy-in/Point Value" [(ngModel)]="game.betValue" (change)="updatePayouts()" />
+      <input mdInput placeholder="Bet/Point Value" [(ngModel)]="game.betValue" />
     </md-input-container>
   </div>
   <div *ngIf="game.scoringType === 'Payouts'">
@@ -51,7 +51,42 @@
   <div class="m-t-30" fxLayout="row" fxLayoutAlign="none center">
     <md-checkbox class="m-l-20" [(ngModel)]="game.isNet" (change)="refresh()">Use Handicaps (Net)</md-checkbox>
   </div>
-  <div>
+  <div *ngIf="game.competitionType === 'match'">
+    <div fxLayout="row" fxLayoutAlign="center none">
+      <h4>Players</h4>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="none center" *ngFor="let team of game.teams">
+      <div class="m-l-20" fxFlex="50">
+        <md-select [(ngModel)]="team.playerId" (change)="refresh()" class="w-8 m-l-20" placeholder="Player">
+          <md-option *ngFor="let player of players" [value]="player.id">{{player.name}}</md-option>
+        </md-select>
+      </div>
+      <div fxFlex>
+        <md-input-container class="w-3">
+          <input mdInput placeholder="Shots" [(ngModel)]="team.strokes" />
+        </md-input-container>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="game.competitionType === 'individual'">
+    <div fxLayout="row" fxLayoutAlign="center none">
+      <h4>Handicaps</h4>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="none center" *ngFor="let team of game.teams">
+      <div class="m-l-20" fxFlex="20">
+        <md-checkbox class="m-l-20" [(ngModel)]="team.isPlaying"></md-checkbox>
+      </div>
+      <div class="m-l-20" fxFlex="40">
+        {{displayName(team.playerId)}}
+      </div>
+      <div fxFlex>
+        <md-input-container class="w-3">
+          <input mdInput placeholder="Shots" [(ngModel)]="team.strokes" />
+        </md-input-container>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="game.competitionType === 'team'">
     <div fxLayout="row" fxLayoutAlign="center none">
       <h4>Teams</h4>
     </div>

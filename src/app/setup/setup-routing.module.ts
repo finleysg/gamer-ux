@@ -4,9 +4,7 @@ import { SummaryComponent } from './summary/summary.component';
 import { GroupCreateComponent } from './groups/group-create.component';
 import { RoundResolverService } from '../core/round-resolver.service';
 import { GamesComponent } from './games/games.component';
-import { GameIndividualComponent } from './individual/game-individual.component';
-import { GameTeamComponent } from './team/game-team.component';
-import { GameMatchComponent } from './match/game-match.component';
+import { GameComponent } from './game/game.component';
 
 const routes: Routes = [
   { path: 'setup', children: [
@@ -14,9 +12,7 @@ const routes: Routes = [
       { path: 'summary', component: SummaryComponent },
       { path: 'groups', component: GroupCreateComponent },
       { path: 'games', component: GamesComponent },
-      { path: 'individual-game', component: GameIndividualComponent },
-      { path: 'match-game', component: GameMatchComponent },
-      { path: 'team-game', component: GameTeamComponent }
+      { path: 'game/:id', component: GameComponent }
     ]}
   ]}
 ];

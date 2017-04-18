@@ -5,11 +5,8 @@ import { SharedModule } from '../shared/shared.module';
 import { SummaryComponent } from './summary/summary.component';
 import { GroupCreateComponent } from './groups/group-create.component';
 import { GamesComponent } from './games/games.component';
-import { GameIndividualComponent } from './individual/game-individual.component';
-import { GameTeamComponent } from './team/game-team.component';
 import { GameComponent } from './game/game.component';
-import { TeamFilterPipe } from './team/team-filter.pipe';
-import { GameMatchComponent } from './match/game-match.component';
+import { TeamFilterPipe } from './game/team-filter.pipe';
 
 
 @NgModule({
@@ -22,11 +19,7 @@ import { GameMatchComponent } from './match/game-match.component';
     GroupCreateComponent,
     GamesComponent,
     GameComponent,
-    GameIndividualComponent,
-    GameMatchComponent,
-    GameTeamComponent,
-    TeamFilterPipe,
-    GameMatchComponent
+    TeamFilterPipe
   ]
 })
 export class SetupModule { }

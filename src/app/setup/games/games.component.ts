@@ -34,21 +34,9 @@ export class GamesComponent implements OnInit {
     this.roundService.deleteGame(game);
   }
 
-  newIndividualGame(): void {
-    this.roundService.createGame(false).then((game) => {
-      this.router.navigate(['individual-game'], { relativeTo: this.route.parent, queryParams: { id: game.id } })
-    });
-  }
-
-  newTeamGame(): void {
-    this.roundService.createGame(true).then((game) => {
-      this.router.navigate(['team-game'], { relativeTo: this.route.parent, queryParams: { id: game.id } })
-    });
-  }
-
-  newMatch(): void {
-    this.roundService.createGame(true).then((game) => {
-      this.router.navigate(['match-game'], { relativeTo: this.route.parent, queryParams: { id: game.id } })
+  newGame(competitionType: string): void {
+    this.roundService.createGame(competitionType).then((game) => {
+      this.router.navigate(['game'], { relativeTo: this.route.parent })
     });
   }
 

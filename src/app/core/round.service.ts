@@ -103,22 +103,21 @@ export class RoundService {
       .toPromise();
   }
 
-  createGame(isTeam: boolean): Promise<Game> {
+  createGame(competitionType): Promise<Game> {
     let game = new Game();
     game.roundId = this._currentRound.id;
-    game.isTeam = isTeam;
+    game.competitionType = competitionType;
     return this.dataService.postApiRequest('games', game.toJson())
       .map((json) => {
-        // this.reloadRound();
         return new Game().fromJson(json);
       })
       .toPromise();
   }
 
-  updateGame(game: Game): Promise<void> {
+  updateGame(game: Game): Promise<Game> {
     return this.dataService.putApiRequest(`games/${game.id}`, game.toJson())
-      .do(() => {
-        this.reloadRound();
+      .map((json) => {
+        return new Game().fromJson(json);
       })
       .toPromise();
   }

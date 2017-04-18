@@ -13,7 +13,7 @@
 </div>
 <div class="m-t-15" fxLayout="row" fxLayoutAlign="none center">
   <div fxFlex="10">
-    <button md-icon-button [color]="'accent'" (click)="newIndividualGame()"><md-icon>add_circle</md-icon></button>
+    <button md-icon-button [color]="'accent'" (click)="newGame('individual')"><md-icon>add_circle</md-icon></button>
   </div>
   <div fxFlex>
     Add an individual game
@@ -21,7 +21,7 @@
 </div>
 <div class="m-t-15" fxLayout="row" fxLayoutAlign="none center">
   <div fxFlex="10">
-    <button md-icon-button [color]="'accent'" (click)="newTeamGame()"><md-icon>add_circle</md-icon></button>
+    <button md-icon-button [color]="'accent'" (click)="newGame('team')"><md-icon>add_circle</md-icon></button>
   </div>
   <div fxFlex>
     Add a team game
@@ -29,7 +29,7 @@
 </div>
 <div class="m-t-15" fxLayout="row" fxLayoutAlign="none center">
   <div fxFlex="10">
-    <button md-icon-button [color]="'accent'" (click)="newMatch()"><md-icon>add_circle</md-icon></button>
+    <button md-icon-button [color]="'accent'" (click)="newGame('match')"><md-icon>add_circle</md-icon></button>
   </div>
   <div fxFlex>
     Add a match (2 players)

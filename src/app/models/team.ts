@@ -5,7 +5,7 @@ export class Team {
   teamNumber: number;
   strokes: number;
   localId: string = Math.floor(Math.random() * 1000).toString();
-  isPlaying: boolean;
+  isPlaying: boolean = true;
 
   fromJson(json: any): Team {
     this.id = json.id;

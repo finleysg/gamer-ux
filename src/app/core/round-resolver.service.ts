@@ -10,11 +10,6 @@ export class RoundResolverService implements Resolve<Round> {
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<Round> {
     let code = route.params['code'].toUpperCase();
-    //if (!this.roundService.round || this.roundService.round.code !== code) {
-      return this.roundService.loadRound(code);
-    //}
-    // return new Promise(resolve => {
-    //   resolve(this.roundService.round);
-    // });
+    return this.roundService.loadRound(code);
   }
 }
