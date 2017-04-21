@@ -38,7 +38,7 @@ export class HomeComponent implements OnInit {
         }
       })
       .catch((err) => {
-        this.snackBar.open(err);
+        this.snackBar.open(err, '', { duration: 5000 });
       });
   }
 }

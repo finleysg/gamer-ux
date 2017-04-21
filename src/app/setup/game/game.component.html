@@ -3,22 +3,22 @@
     <h3>Game/Match Setup</h3>
   </div>
   <div class="m-t-30" fxLayout="row" fxLayoutAlign="none center" >
-    <md-select [(ngModel)]="game.gameType" (change)="updateScoringTypes()" class="w-8 m-l-20" placeholder="Select a game">
+    <md-select [(ngModel)]="game.gameType" (change)="updateGameType()" class="w-8 m-l-20" placeholder="Select a game">
       <md-option *ngFor="let gameType of gameTypes" [value]="gameType">{{gameType}}</md-option>
     </md-select>
   </div>
   <div class="m-t-30" fxLayout="row" fxLayoutAlign="none center" >
-    <md-select [(ngModel)]="game.scoringType" class="w-8 m-l-20" placeholder="Scoring System">
+    <md-select [(ngModel)]="game.scoringType" (change)="updateScoringType()" class="w-8 m-l-20" placeholder="Scoring System">
       <md-option *ngFor="let scoringType of scoringTypes" [value]="scoringType">{{scoringType}}</md-option>
     </md-select>
   </div>
   <div class="m-t-30" fxLayout="row" fxLayoutAlign="none center" >
     <md-input-container class="m-l-20 w-5">
-      <input mdInput placeholder="Bet/Point Value" [(ngModel)]="game.betValue" />
+      <input mdInput placeholder="Bet/Buy-in/Point Value" [(ngModel)]="game.betValue" />
     </md-input-container>
   </div>
   <div *ngIf="game.scoringType === 'Payouts'">
-    <div fxLayout="row" fxLayoutAlign="center none">
+    <div fxLayout="row" fxLayoutAlign="none center">
       <h4>Payouts</h4>
     </div>
     <div class="m-t-15" fxLayout="row" fxLayoutAlign="none center" *ngFor="let payout of game.payouts">
@@ -30,7 +30,7 @@
       </div>
       <div fxFlex="20">
         <md-input-container class="w-8">
-          <input mdInput placeholder="%" [(ngModel)]="payout.percentage" (change)="updatePayouts()" />
+          <input mdInput placeholder="%" [(ngModel)]="payout.percentage" />
         </md-input-container>
       </div>
       <div fxFlex="30">
@@ -49,16 +49,16 @@
     </div>
   </div>
   <div class="m-t-30" fxLayout="row" fxLayoutAlign="none center">
-    <md-checkbox class="m-l-20" [(ngModel)]="game.isNet" (change)="refresh()">Use Handicaps (Net)</md-checkbox>
+    <md-checkbox class="m-l-20" [(ngModel)]="game.isNet" (change)="updateNetVsGross()">Use Handicaps (Net)</md-checkbox>
   </div>
   <div *ngIf="game.competitionType === 'match'">
-    <div fxLayout="row" fxLayoutAlign="center none">
+    <div fxLayout="row" fxLayoutAlign="none center">
       <h4>Players</h4>
     </div>
     <div fxLayout="row" fxLayoutAlign="none center" *ngFor="let team of game.teams">
       <div class="m-l-20" fxFlex="50">
-        <md-select [(ngModel)]="team.playerId" (change)="refresh()" class="w-8 m-l-20" placeholder="Player">
-          <md-option *ngFor="let player of players" [value]="player.id">{{player.name}}</md-option>
+        <md-select [(ngModel)]="team.playerId" (change)="updateAvailablePlayers()" class="w-8 m-l-20" placeholder="Player">
+          <md-option *ngFor="let player of availablePlayers[team.localId]" [value]="player.id">{{player.name}}</md-option>
         </md-select>
       </div>
       <div fxFlex>
@@ -68,8 +68,8 @@
       </div>
     </div>
   </div>
-  <div *ngIf="game.competitionType === 'individual'">
-    <div fxLayout="row" fxLayoutAlign="center none">
+  <div *ngIf="game.competitionType === 'individual' && game.isNet">
+    <div fxLayout="row" fxLayoutAlign="none center">
       <h4>Handicaps</h4>
     </div>
     <div fxLayout="row" fxLayoutAlign="none center" *ngFor="let team of game.teams">
@@ -87,17 +87,17 @@
     </div>
   </div>
   <div *ngIf="game.competitionType === 'team'">
-    <div fxLayout="row" fxLayoutAlign="center none">
+    <div fxLayout="row" fxLayoutAlign="none center">
       <h4>Teams</h4>
     </div>
     <div fxLayout="row" fxLayoutAlign="center none" *ngIf="round.groups.length > 1">
       <button md-raised-button [color]="'accent'" [disabled]="teamsAreGroups" (click)="assignByGroups()">Teams are Groups</button>
     </div>
-    <div *ngFor="let teamNumber of teams">
+    <div *ngFor="let teamNumber of teamNumbers">
       <h5 class="m-l-20">Team {{teamNumber}}</h5>
       <div fxLayout="row" fxLayoutAlign="none center" *ngFor="let team of game.teams | teamFilter: teamNumber">
         <div class="m-l-20" fxFlex="50">
-          <md-select [(ngModel)]="team.playerId" (change)="refresh()" class="w-8 m-l-20" placeholder="Player">
+          <md-select [(ngModel)]="team.playerId" (change)="updateAvailablePlayers()" class="w-8 m-l-20" placeholder="Player">
             <md-option *ngFor="let player of availablePlayers[team.localId]" [value]="player.id">{{player.name}}</md-option>
           </md-select>
         </div>

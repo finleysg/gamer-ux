@@ -15,6 +15,7 @@ export class Game {
 
   fromJson(json): Game {
     this.id = json.id;
+    this.name = json.name;
     this.isNet = json.is_net;
     this.competitionType = json.competition_type;
     this.gameType = json.game_type;
@@ -27,7 +28,7 @@ export class Game {
         this.teams.push(new Team().fromJson(team));
       });
     }
-    if (json.payout) {
+    if (json.payouts) {
       json.payouts.forEach(payout => {
         this.payouts.push(new Payout().fromJson(payout));
       })
@@ -42,6 +43,7 @@ export class Game {
     this.payouts.forEach(p => payouts.push(p.toJson()));
     return {
       'id': this.id,
+      'name': this.name,
       'round': this.roundId,
       'is_net': this.isNet,
       'competition_type': this.competitionType,

@@ -7,7 +7,7 @@
       <button md-icon-button [color]="'warn'" (click)="removeGame(game)"><md-icon>remove_circle</md-icon></button>
     </div>
     <div fxFlex>
-      <a [routerLink]="[game.id]">{{ game.name }}</a>
+      <a (click)="editGame(game)">{{ game.name }}</a>
     </div>
   </div>
 </div>

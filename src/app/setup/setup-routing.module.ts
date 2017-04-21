@@ -8,11 +8,11 @@ import { GameComponent } from './game/game.component';
 
 const routes: Routes = [
   { path: 'setup', children: [
-    { path: ':code', resolve: { round: RoundResolverService }, children: [
-      { path: 'summary', component: SummaryComponent },
-      { path: 'groups', component: GroupCreateComponent },
-      { path: 'games', component: GamesComponent },
-      { path: 'game/:id', component: GameComponent }
+    { path: ':code', children: [
+      { path: 'summary', resolve: { round: RoundResolverService }, component: SummaryComponent },
+      { path: 'groups', resolve: { round: RoundResolverService }, component: GroupCreateComponent },
+      { path: 'games', resolve: { round: RoundResolverService }, component: GamesComponent },
+      { path: 'game/:id', resolve: { round: RoundResolverService }, component: GameComponent }
     ]}
   ]}
 ];

@@ -36,8 +36,12 @@ export class GamesComponent implements OnInit {
 
   newGame(competitionType: string): void {
     this.roundService.createGame(competitionType).then((game) => {
-      this.router.navigate(['game'], { relativeTo: this.route.parent })
+      this.router.navigate(['game', game.id], { relativeTo: this.route.parent })
     });
+  }
+  
+  editGame(game: Game): void {
+    this.router.navigate(['game', game.id], { relativeTo: this.route.parent })
   }
 
   onNext(): void {
