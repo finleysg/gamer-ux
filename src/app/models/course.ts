@@ -8,6 +8,34 @@ export class Course {
   rating: number;
   holes: Hole[] = [];
 
+  get par(): number {
+    return this.front9 + this.back9;
+  }
+  
+  get front9(): number {
+    let par = 0;
+    if (this.holes && this.holes.length) {
+      this.holes.forEach(h => {
+        if (h.holeNumber <= 9) {
+          par += h.par;
+        }
+      });
+    }
+    return par;
+  }
+
+  get back9(): number {
+    let par = 0;
+    if (this.holes && this.holes.length) {
+      this.holes.forEach(h => {
+        if (h.holeNumber > 9) {
+          par += h.par;
+        }
+      });
+    }
+    return par;
+  }
+  
   fromJson(json: any): Course {
     this.id = json.id;
     this.name = json.name;

@@ -5,6 +5,7 @@ import { SharedModule } from '../shared/shared.module';
 import { GroupScoreComponent } from './group-score/group-score.component';
 import { LeaderboardComponent } from './leaderboard/leaderboard.component';
 import { SkinService } from './skin.service';
+import {LeaderboardPipe} from "./leaderboard/leaderboard.pipe";
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { SkinService } from './skin.service';
   ],
   declarations: [
     GroupScoreComponent,
-    LeaderboardComponent
+    LeaderboardComponent,
+    LeaderboardPipe
   ]
 })
 export class ScoringModule { }

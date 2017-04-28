@@ -1,3 +1,33 @@
-<p>
-  group-score works!
-</p>
+<div fxLayout="row" fxLayoutAlign="center none" *ngIf="group">
+  <h3 (click)="toLeaderboard()">Group {{group.number}}</h3>
+</div>
+<div fxLayout="row" fxLayoutAlign="center none" *ngIf="hole">
+  <h4>Hole {{hole.holeNumber}} (Par {{hole.par}})</h4>
+</div>
+<div class="m-t-15" *ngFor="let score of scores">
+  <div class="m-t-15" fxLayout="row" fxLayoutAlign="none center">
+    <div class="m-l-20" fxFlex="25">
+      <p>{{score.player.name}}</p>
+    </div>
+    <div fxFlex="10">
+      <button md-icon-button (click)="updateScore(score, -1)"><md-icon>remove</md-icon></button>
+    </div>
+    <div fxFlex="20" [class]="getScoreClass(score)">
+      <div (dblclick)="toggleNoScore(score)">
+        <p class="score">{{score.noScore ? 'X' : score.grossScore}}</p>
+      </div>
+    </div>
+    <div fxFlex="10">
+      <button md-icon-button (click)="updateScore(score, 1)"><md-icon>add</md-icon></button>
+    </div>
+  </div>
+</div>
+<div class="m-t-30" fxLayout="row" fxLayoutAlign="none center" >
+  <span class="align-left">
+    <button md-button [color]="'primary'" (click)="previousHole()">Previous</button>
+  </span>
+  <span class="fill-remaining-space"></span>
+  <span class="align-right">
+    <button md-button [color]="'primary'" (click)="nextHole()">Next</button>
+  </span>
+</div>

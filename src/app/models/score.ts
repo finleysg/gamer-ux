@@ -9,9 +9,9 @@ export class Score {
   grossScore: number;
   player: Player;
   hole: Hole;
-  // TODO: add these to the api
   noScore: boolean;
   proxy: boolean;
+  dirty: boolean;
 
   fromJson(json: any): Score {
     this.id = json.id;
@@ -19,6 +19,8 @@ export class Score {
     this.playerId = json.player;
     this.holeId = json.hole;
     this.grossScore = json.gross_score;
+    this.noScore = json.no_score;
+    this.proxy = json.proxy;
     return this;
   }
 
@@ -28,7 +30,9 @@ export class Score {
       'round': this.roundId,
       'player': this.playerId,
       'hole': this.holeId,
-      'gross_score': this.grossScore
+      'gross_score': this.grossScore,
+      'no_score': this.noScore,
+      'proxy': this.proxy
     }
   }
 }

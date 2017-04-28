@@ -45,6 +45,6 @@ export class GamesComponent implements OnInit {
   }
 
   onNext(): void {
-
+    this.router.navigate(['scoring', this.round.code, 1, 1]);
   }
 }

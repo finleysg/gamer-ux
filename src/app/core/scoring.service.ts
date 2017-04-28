@@ -1,92 +1,92 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs/Subject';
-import { Observable } from 'rxjs/Observable';
 import { DataService } from './data.service';
 import { RoundService } from './round.service';
 import { Round } from '../models/round';
 import { Group } from '../models/group';
 import { Score } from '../models/score';
-import { Leaderboard } from '../models/leaderboard';
 import { Hole } from '../models/hole';
 import { Player } from '../models/player';
+import { Observable } from "rxjs/Observable";
+import {Leaderboard} from "../models/leaderboard";
 
 @Injectable()
 export class ScoringService {
 
-  private _players: Player[];
+  private _group: Group;
   private _scores: Score[];
-  private _leaderboardSource: Subject<Leaderboard>;
   private _currentRound: Round;
-  private _currentHole: Hole;
-  private _currentHoleSource: Subject<Hole>;
 
   constructor(
     private roundService: RoundService,
     private dataService: DataService
   ) {
-    this.roundService.currentRound.subscribe((round: Round) => {
-      this._currentRound = round;
-      this._players = this.roundService.players;
-    });
-    this._currentHoleSource = new Subject<Hole>();
-    this._leaderboardSource = new Subject<Leaderboard>();
   }
 
-  get currentHole(): Observable<Hole> {
-    return this._currentHoleSource.asObservable();
-  }
-
-  get leaderboard(): Observable<Leaderboard> {
-    return this._leaderboardSource.asObservable();
-  }
-
-  reloadScores(): void {
-    this.dataService.getApiRequest('scores', { 'session': this._currentRound.id })
-      .do((json: any) => {
-        this._scores = json.map(s => new Score().fromJson(s));
-        // Attach a Player and Hole object for UI convenience
-        this._scores.forEach((score: Score) => {
-          score.hole = this.getHole(score.holeId);
-          score.player = this.getPlayer(score.playerId); // TODO: may be unnecessary
-        });
-        this.refreshLeaderboard();
-      });
-  }
-
-  getScores(group: Group, hole: Hole): Score[] {
-    const playerIds = group.players.map(p => p.id);
-    let scores = this._scores.filter(s => {
-      return s.holeId === hole.id && playerIds.includes(s.playerId);
-    });
-    // No scores for this hole yet, so create them with par to start
-    if (!scores || !scores.length) {
-      scores = [];
-      group.players.forEach((player: Player) => {
-        let score = new Score();
-        score.roundId = this._currentRound.id;
-        score.holeId = hole.id;
-        score.playerId = player.id;
-        score.grossScore = hole.par;
-        score.hole = hole;
-        score.player = player;
-        scores.push(score);
+  ensureRound(code: string): Promise<Round> {
+    if (this._currentRound && this._currentRound.code === code) {
+      return new Promise(resolve => {
+        resolve(this._currentRound);
       });
     }
-    return scores;
+    else {
+      return this.roundService.loadRound(code)
+        .then(round => {
+          this._currentRound = round;
+          return round;
+        });
+    }
+  } 
+  
+  private loadScores(): Promise<Score[]> {
+    return this.dataService.getApiRequest('scores', { 'round': this._currentRound.id })
+      .map((json: any) => {
+        this._scores = json.map(s => new Score().fromJson(s));
+        this._scores.forEach((score: Score) => {
+          score.hole = this.getHole(score.holeId);
+          score.player = this.getPlayer(score.playerId);
+        });
+        return this._scores;
+      })
+      .toPromise();
   }
 
-  addScore(score: Score): void {
-    this.dataService.postApiRequest('scores', score.toJson())
-      .do(() => {
-        this.reloadScores();
+  getScores(group: Group, hole: Hole): Promise<Score[]> {
+    this._group = group;
+    return this.loadScores()
+      .then(scores => {
+        const playerIds = group.players.map(p => p.id);
+        let groupScores = scores.filter(s => {
+          return s.holeId === hole.id && playerIds.includes(s.playerId);
+        });
+        // No scores for this hole yet, so create them with par to start
+        if (!groupScores || !groupScores.length) {
+          groupScores = [];
+          group.players.forEach((player: Player) => {
+            let score = new Score();
+            score.roundId = this._currentRound.id;
+            score.holeId = hole.id;
+            score.playerId = player.id;
+            score.grossScore = hole.par;
+            score.hole = hole;
+            score.player = player;
+            score.dirty = true;
+            groupScores.push(score);
+          });
+        }
+        return groupScores;
       });
   }
 
-  updateScore(score: Score): void {
-    this.dataService.putApiRequest(`scores/${score.id}`, score.toJson())
-      .do(() => {
-        this.reloadScores();
-      });
+  saveScores(scores: Score[]): void {
+    let actions = [];
+    scores.forEach(s => {
+      if (s.id) {
+        actions.push(this.dataService.putApiRequest(`scores/${s.id}`, s.toJson()));
+      } else {
+        actions.push(this.dataService.postApiRequest('scores', s.toJson()));
+      }
+    });
+    Observable.forkJoin(actions).subscribe();
   }
 
   calculateEsc(score: Score): number {
@@ -94,17 +94,20 @@ export class ScoringService {
     return score.hole.par + 2;
   }
 
-  private refreshLeaderboard(): void {
-    let leaderboard = new Leaderboard(this._currentRound.course);
-    leaderboard.reload(this._players, this._scores);
-    this._leaderboardSource.next(leaderboard);
+  getLeaderboard(): Promise<Leaderboard> {
+    return this.loadScores()
+      .then(scores => {
+        let leaderboard = new Leaderboard(this._currentRound.course);
+        leaderboard.reload(this.roundService.players, scores);
+        return leaderboard;
+      });
   }
-
+  
   private getHole(holeId: number): Hole {
     return this._currentRound.course.getHole(holeId);
   }
 
   private getPlayer(playerId: number): Player {
-    return this._players.find(p => p.id === playerId);
+    return this.roundService.players.find(p => p.id === playerId);
   }
 }

@@ -4,7 +4,7 @@ import { LeaderboardComponent } from './leaderboard/leaderboard.component';
 import { GroupScoreComponent } from './group-score/group-score.component';
 
 const routes: Routes = [
-  { path: 'leaderboard/:code/:id', component: LeaderboardComponent },
+  { path: 'leaderboard/:code/:side/:id', component: LeaderboardComponent },
   { path: 'scoring/:code/:group/:hole', component: GroupScoreComponent }
 ];
 

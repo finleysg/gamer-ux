@@ -62,11 +62,11 @@ export class RoundService {
           return this.courseService.getCourse(this._currentRound.course.id);
         }
       })
-      .then(json => {
-        if (!json) {
+      .then(course => {
+        if (!course) {
           return null;
         }
-        this._currentRound.course = new Course().fromJson(json);
+        this._currentRound.course = course;
         this._currentRoundSource.next(cloneDeep(this._currentRound));
         return this._currentRound;
       });

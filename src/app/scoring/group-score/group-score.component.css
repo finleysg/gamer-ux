@@ -1,0 +1,21 @@
+.score {
+  text-align: center;
+  vertical-align: middle;
+  font-size: 1.2em;
+  font-weight: bold;
+  opacity: 1;
+}
+.par {
+  /*height: 40px;*/
+  /*width: 40px;*/
+  background: rgba(0,0,255,.5);
+}
+.below-par {
+  background: rgba(0,255,0,.5);
+}
+.above-par {
+  background: rgba(255,153,0,.5);
+}
+.no-score {
+  background: rgba(255,0,0,.5);
+}
