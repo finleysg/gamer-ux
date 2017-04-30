@@ -1,38 +1,40 @@
-<div fxLayout="row" fxLayoutAlign="center none" >
-  <h3>Games</h3>
-</div>
-<div class="m-t-15" *ngFor="let game of games">
-  <div class="m-t-15" fxLayout="row" fxLayoutAlign="none center">
-    <div fxFlex="10">
-      <button md-icon-button [color]="'warn'" (click)="removeGame(game)"><md-icon>remove_circle</md-icon></button>
-    </div>
-    <div fxFlex>
-      <a (click)="editGame(game)">{{ game.name }}</a>
-    </div>
+<div fxLayout="row" fxLayoutWrap="wrap" >
+  <div fxFlex.gt-sm="25" fxFlex.gt-xs="50" fxFlex="100" *ngFor="let game of games">
+    <md-card class="card-widget">
+      <div md-card-widget (click)="editGame(game)">
+        <button md-mini-fab color="primary" md-card-icon class="shadow-none">
+          <md-icon>casino</md-icon>
+        </button>
+        <div class="pl-1 pr-1">
+          <h5 md-card-widget-title>{{game.name}}</h5>
+          <p class="mat-text-muted text-md">{{game.betValue}}</p>
+        </div>
+      </div>
+    </md-card>
   </div>
 </div>
-<div class="m-t-15" fxLayout="row" fxLayoutAlign="none center">
-  <div fxFlex="10">
-    <button md-icon-button [color]="'accent'" (click)="newGame('individual')"><md-icon>add_circle</md-icon></button>
-  </div>
-  <div fxFlex>
-    Add an individual game
-  </div>
-</div>
-<div class="m-t-15" fxLayout="row" fxLayoutAlign="none center">
-  <div fxFlex="10">
-    <button md-icon-button [color]="'accent'" (click)="newGame('team')"><md-icon>add_circle</md-icon></button>
-  </div>
-  <div fxFlex>
-    Add a team game
-  </div>
-</div>
-<div class="m-t-15" fxLayout="row" fxLayoutAlign="none center">
-  <div fxFlex="10">
-    <button md-icon-button [color]="'accent'" (click)="newGame('match')"><md-icon>add_circle</md-icon></button>
-  </div>
-  <div fxFlex>
-    Add a match (2 players)
+<div fxLayout="row">
+  <div fxFlex.gt-sm="25" fxFlex.gt-xs="50" fxFlex="100">
+    <md-nav-list class="navigation">
+      <md-list-item>
+        <a class="relative" (click)="newGame('individual')">
+          <md-icon class="m-r-15">person_add</md-icon>
+          <span>Add an individual game</span>
+        </a>
+      </md-list-item>
+      <md-list-item>
+        <a class="relative" (click)="newGame('team')">
+          <md-icon class="m-r-15">group_add</md-icon>
+          <span>Add a team game</span>
+        </a>
+      </md-list-item>
+      <md-list-item>
+        <a class="relative" (click)="newGame('match')">
+          <md-icon class="m-r-15">people_outline</md-icon>
+          <span>Add a match (2 players)</span>
+        </a>
+      </md-list-item>
+    </md-nav-list>
   </div>
 </div>
 <div class="m-t-30" fxLayout="row" fxLayoutAlign="center none" >

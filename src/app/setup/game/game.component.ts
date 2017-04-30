@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { RoundService } from '../../core/round.service';
@@ -24,7 +24,6 @@ export class GameComponent implements OnInit {
   playerList: Player[] = [];
   teamNumbers: number[] = [];
   availablePlayers: any = {};
-  teamsAreGroups: boolean;
 
   constructor(
     private roundService: RoundService,
@@ -108,10 +107,9 @@ export class GameComponent implements OnInit {
 
   // Methods for team games
   assignByGroups(): void {
-    if (!this.teamsAreGroups) {
-      this.gameService.createDefaultTeams(this.game);
-      this.teamsAreGroups = true;
-    }
+    this.gameService.createDefaultTeams(this.game);
+    this.updateTeamNumbers();
+    this.updateAvailablePlayers();
   }
 
 
@@ -150,11 +148,10 @@ export class GameComponent implements OnInit {
     this.game.teams.push(newTeam);
   }
 
-  removePlayer(teamNumber): void {
-    const teams = this.game.teams.filter(t => t.teamNumber === teamNumber);
-    const localId = teams[teams.length - 1].localId;
-    const idx = this.game.teams.findIndex(t => t.localId === localId);
+  removePlayer(team: Team): void {
+    const idx = this.game.teams.findIndex(t => t.localId === team.localId);
     this.game.teams.splice(idx, 1);
+    this.updateAvailablePlayers();
     this.gameService.calculateHandicaps(this.game);
   }
 
@@ -182,8 +179,34 @@ export class GameComponent implements OnInit {
     let payout = new Payout();
     payout.place = this.game.payouts.length + 1;
     this.game.payouts.push(payout);
+    this.defaultPercentages();
+    this.calculatePayouts();
   }
 
+  defaultPercentages(): void {
+    const places = this.game.payouts.length;
+    switch(places) {
+      case 1:
+        this.game.payouts[0].percentage = 100;
+        break;
+      case 2:
+        this.game.payouts[0].percentage = 70;
+        this.game.payouts[1].percentage = 30;
+        break;
+      case 3:
+        this.game.payouts[0].percentage = 60;
+        this.game.payouts[1].percentage = 25;
+        this.game.payouts[2].percentage = 15;
+        break;
+      case 4:
+        this.game.payouts[0].percentage = 50;
+        this.game.payouts[1].percentage = 25;
+        this.game.payouts[2].percentage = 15;
+        this.game.payouts[3].percentage = 10;
+        break;
+    }
+  }
+  
   calculatePayouts(): void {
     const pot = this.calculatePot();
     if (pot > 0) {
@@ -198,9 +221,10 @@ export class GameComponent implements OnInit {
   removePayout(): void {
     const idx = this.game.payouts.length - 1;
     this.game.payouts.splice(idx, 1);
+    this.defaultPercentages();
+    this.calculatePayouts();
   }
 
-  // TODO: exclude non-playing
   private calculatePot(): number {
     return this.game.betValue * this.playerList.length;
   }

@@ -57,13 +57,19 @@ export class GroupScoreComponent implements OnInit {
   getScoreClass(score: Score): string {
     let scoreClass = 'par';
     if (score.noScore) {
-      scoreClass = 'no-score'
+      scoreClass = 'no-score';
+    } else if (score.grossScore === 0) {
+      scoreClass = 'empty';
     } else {
-      if (score.grossScore < score.hole.par) {
-        scoreClass = 'below-par';
+      if (score.grossScore + 2 <= this.hole.par) {
+        scoreClass = 'eagle';
+      } else if (score.grossScore + 1 === this.hole.par) {
+        scoreClass = 'birdie';
       }
-      else if (score.grossScore > score.hole.par) {
-        scoreClass = 'above-par';
+      else if (score.grossScore === this.hole.par + 1) {
+        scoreClass = 'bogey';
+      } else if (score.grossScore > this.hole.par + 1) {
+        scoreClass = 'big-number';
       }
     }
     return scoreClass;

@@ -39,3 +39,26 @@
 .m-l-20 {
   margin-left: 20px;
 }
+
+.m-r-15 {
+  margin-right: 15px;
+}
+
+.par {
+
+}
+.birdie {
+  background: rgba(0,255,0,.5);
+}
+.eagle {
+  background: rgba(0,255,0,.8);
+}
+.bogey {
+  background: rgba(255,153,0,.7);
+}
+.big-number {
+  background: rgba(255,0,0,.5);
+}
+.no-score {
+  background: rgba(255,0,0,.7);
+}

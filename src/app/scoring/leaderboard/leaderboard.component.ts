@@ -42,7 +42,8 @@ export class LeaderboardComponent implements OnInit {
     this.router.navigate(['leaderboard', this.round.code, side, 0]);
   }
   
-  closeLeaderboard(): void {
-    
+  gotoScores(): void {
+    let currentHole = this.scoringService.lastHole.holeNumber < this.round.course.numberOfHoles ? this.scoringService.lastHole.holeNumber + 1 : this.scoringService.lastHole.holeNumber;
+    this.router.navigate(['scoring', this.round.code, this.scoringService.currentGroup.number, currentHole]);
   }
 }

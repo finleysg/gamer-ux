@@ -66,7 +66,7 @@ export class Payout {
   fromJson(json: any): Payout {
     this.id = json.id;
     this.place = json.place;
-    this.percentage = json.percentage;
+    this.percentage = json.percentage * 100;
     this.amount = json.amount;
     return this;
   }
@@ -75,7 +75,7 @@ export class Payout {
     return {
       'id': this.id,
       'place': this.place,
-      'percentage': this.percentage,
+      'percentage': this.percentage / 100,
       'amount': this.amount
     }
   }

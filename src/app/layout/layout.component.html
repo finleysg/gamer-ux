@@ -2,25 +2,19 @@
   <button md-icon-button (click)="sidenav.toggle()">
     <md-icon>menu</md-icon>
   </button>
-  <span class="m-l-15">{{title}}</span>
+  <!--<span class="m-l-15">{{title}}</span>-->
   <span class="fill-remaining-space"></span>
   <button md-icon-button [mdMenuTriggerFor]="menu">
     <md-icon>more_vert</md-icon>
   </button>
   <md-menu #menu="mdMenu">
     <button md-menu-item>
-      <span>EKKAHO (May 1)</span>
-    </button>
-    <button md-menu-item disabled>
-      <span>WKOLJE (Apr 27)</span>
-    </button>
-    <button md-menu-item>
-      <span>ALSPEM (Apr 23)</span>
+      <span>TODO</span>
     </button>
   </md-menu>
 </md-toolbar>
-<md-sidenav-container class="gamer-container">
-  <md-sidenav #sidenav class="gamer-sidenav">
+<md-sidenav-container class="app-inner">
+  <md-sidenav #sidenav class="sidebar-panel">
     <app-sidebar></app-sidebar>
   </md-sidenav>
   <div class="gamer-container">

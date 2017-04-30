@@ -15,11 +15,20 @@ export class ScoringService {
   private _group: Group;
   private _scores: Score[];
   private _currentRound: Round;
-
+  private _hole: Hole;
+  
   constructor(
     private roundService: RoundService,
     private dataService: DataService
   ) {
+  }
+  
+  get lastHole(): Hole {
+    return this._hole;
+  }
+  
+  get currentGroup(): Group {
+    return this._group;
   }
 
   ensureRound(code: string): Promise<Round> {
@@ -78,6 +87,9 @@ export class ScoringService {
   }
 
   saveScores(scores: Score[]): void {
+    if (scores[0]) {
+      this._hole = scores[0].hole;
+    }
     let actions = [];
     scores.forEach(s => {
       if (s.id) {

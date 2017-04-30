@@ -10,7 +10,7 @@ export class Round {
   course: Course;
   groups: Group[] = [];
   games: Game[] = [];
-  scores: any[];
+  currentState: RoundStateEnum;
 
   fromJson(json: any): Round {
     // only serializing a course id
@@ -43,4 +43,13 @@ export class Round {
       'course': this.course.id
     }
   }
+}
+
+export enum RoundStateEnum {
+  NoRound = 0,
+  SetupIncomplete,
+  SetupComplete,
+  Scoring,
+  ScoringComplete,
+  Archived
 }
