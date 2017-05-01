@@ -7,6 +7,7 @@ import { GameResultsComponent } from './game-results/game-results.component';
 import { SkinsComponent } from './skins/skins.component';
 import { BestBallComponent } from './best-ball/best-ball.component';
 import { MatchPlayComponent } from './match-play/match-play.component';
+import { ResultDirective } from "./result.directive";
 
 @NgModule({
   imports: [
@@ -16,6 +17,9 @@ import { MatchPlayComponent } from './match-play/match-play.component';
   declarations: [
     GameResultComponent,
     GameResultsComponent,
+    ResultDirective
+  ],
+  entryComponents: [
     SkinsComponent,
     BestBallComponent,
     MatchPlayComponent

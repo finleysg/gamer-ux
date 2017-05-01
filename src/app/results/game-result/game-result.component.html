@@ -1,3 +1,9 @@
-<p>
-  game-result works!
-</p>
+<md-card>
+  <md-card-title>{{game.name}} Results</md-card-title>
+  <md-card-content>
+    <ng-template result-host></ng-template>
+  </md-card-content>
+  <md-card-actions>
+    <button md-button [routerLink]="['results', round.code, 'leaderboard', game.id]">Leaderboard View</button>
+  </md-card-actions>
+</md-card>
