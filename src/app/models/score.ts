@@ -7,6 +7,8 @@ export class Score {
   playerId: number;
   holeId: number;
   grossScore: number;
+  netScore: number;
+  teamNumber: number;
   player: Player;
   hole: Hole;
   noScore: boolean;
@@ -19,6 +21,7 @@ export class Score {
     this.playerId = json.player;
     this.holeId = json.hole;
     this.grossScore = json.gross_score;
+    this.teamNumber = json.team_number;
     this.noScore = json.no_score;
     this.proxy = json.proxy;
     return this;
@@ -31,6 +34,7 @@ export class Score {
       'player': this.playerId,
       'hole': this.holeId,
       'gross_score': this.grossScore,
+      'team_number': this.teamNumber,
       'no_score': this.noScore,
       'proxy': this.proxy
     }
@@ -43,10 +47,10 @@ export class Skin {
   score: number;
   value: number;
 
-  constructor(score: Score, value: number, bumps: number = 0) {
+  constructor(score: Score, value: number, isNet: boolean = false) {
     this.hole = score.hole;
     this.player = score.player;
-    this.score = score.grossScore - bumps;
+    this.score = isNet ? score.netScore : score.grossScore;
     this.value = value;
   }
 }

@@ -1,3 +1,7 @@
-<p>
-  game-results works!
-</p>
+<div class="full-results" *ngIf="scores">
+  <div *ngFor="let game of round.games">
+    <div *ngIf="game.gameType === 'Skins'">
+      <app-skins [game]="game" [scores]="scores"></app-skins>
+    </div>
+  </div>
+</div>

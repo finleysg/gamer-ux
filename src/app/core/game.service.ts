@@ -109,6 +109,7 @@ export class GameService {
         'Best Ball',
         'Best Two Balls',
         'Best Three Balls',
+        'Flip the Burger',
         'Hollywood',
         'Las Vegas',
         'Las Vegas (Flips)',

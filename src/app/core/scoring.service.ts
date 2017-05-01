@@ -86,6 +86,10 @@ export class ScoringService {
       });
   }
 
+  getAllScores(): Promise<Score[]> {
+    return this.loadScores();
+  }
+
   saveScores(scores: Score[]): void {
     if (scores[0]) {
       this._hole = scores[0].hole;

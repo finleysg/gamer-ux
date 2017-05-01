@@ -9,6 +9,7 @@ import { GroupService } from './group.service';
 import { RoundResolverService } from './round-resolver.service';
 import { GameResolverService } from './game-resolver.service';
 import { GameService } from './game.service';
+import { SkinService } from "./skin.service";
 import './rxjs-extensions';
 
 @NgModule({
@@ -25,7 +26,8 @@ import './rxjs-extensions';
     GroupService,
     RoundResolverService,
     GameResolverService,
-    GameService
+    GameService,
+    SkinService
   ]
 })
 export class AppCoreModule { }

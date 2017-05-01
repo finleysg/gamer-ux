@@ -4,7 +4,6 @@ import { ScoringRoutingModule } from './scoring-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { GroupScoreComponent } from './group-score/group-score.component';
 import { LeaderboardComponent } from './leaderboard/leaderboard.component';
-import { SkinService } from './skin.service';
 import {LeaderboardPipe} from "./leaderboard/leaderboard.pipe";
 
 @NgModule({
@@ -13,7 +12,6 @@ import {LeaderboardPipe} from "./leaderboard/leaderboard.pipe";
     ScoringRoutingModule
   ],
   providers: [
-    SkinService
   ],
   declarations: [
     GroupScoreComponent,

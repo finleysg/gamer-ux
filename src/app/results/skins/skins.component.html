@@ -1,0 +1,12 @@
+<md-card>
+  <md-card-title>{{game.name}}</md-card-title>
+  <md-card-content>
+    <md-list>
+      <md-list-item *ngFor="let skin of skins">
+        <md-icon class="mat-green" md-list-icon>monetization_on</md-icon>
+        <h4 md-line>{{skin.player.name}}</h4>
+        <p md-line>Hole {{skin.hole.holeNumber}} with a {{game.isNet ? 'net' : ''}} {{skin.score}}</p>
+      </md-list-item>
+    </md-list>
+  </md-card-content>
+</md-card>
