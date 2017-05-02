@@ -9,3 +9,8 @@ table {
 .skin {
   background: rgba(255,255,0,.7);
 }
+.bumps {
+  display: block;
+  float: left;
+  margin-top: -15px;
+}

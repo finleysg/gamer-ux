@@ -1,7 +1,7 @@
 import {Component, OnInit, Input} from '@angular/core';
 import {Game} from "../../models/game";
 import {Score} from "../../models/score";
-import {SkinService} from "../../core/skin.service";
+import {SkinService} from "../services/skin.service";
 import {ResultComponent} from "../result.component";
 import {RoundService} from "../../core/round.service";
 import {Skinsboard} from "./skinsboard";

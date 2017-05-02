@@ -10,6 +10,8 @@ import { ResultDirective } from "./result.directive";
 import { LeaderboardResultComponent } from './leaderboard-result/leaderboard-result.component';
 import { LeaderboardResultDirective } from "./leaderboard-result.directive";
 import { SkinsBoardComponent } from './skins-board/skins-board.component';
+import { SkinService } from "./services/skin.service";
+import { BestBallServiceService } from './services/best-ball.service';
 
 @NgModule({
   imports: [
@@ -31,6 +33,10 @@ import { SkinsBoardComponent } from './skins-board/skins-board.component';
     BestBallComponent,
     MatchPlayComponent,
     SkinsBoardComponent
+  ],
+  providers: [
+    SkinService,
+    BestBallService
   ]
 })
 export class ResultsModule { }

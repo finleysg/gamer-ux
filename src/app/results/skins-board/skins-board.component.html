@@ -41,6 +41,7 @@
     <td>{{player.name}}</td>
     <td class="player-handicap">{{player.strokes}}</td>
     <td *ngFor="let hole of player.holes | sideFilter: side" class="hole" [class.skin]="hole.isSkin">
+      <span class="bumps">{{hole.bumps === 1 ? '*' : hole.bumps === 2 ? '**' : ''}}</span>
       <span>{{hole.score}}</span>
     </td>
     <td class="hole-subtotal">{{side === 'front' ? player.totalFrontScore : player.totalBackScore}}</td>

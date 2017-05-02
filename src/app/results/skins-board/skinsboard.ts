@@ -41,7 +41,8 @@ export class SkinsPlayer {
       let score = scores.find(s => s.holeId === h.id && s.playerId === player.id);
       let hole = new SkinsHole();
       hole.holeNumber = h.holeNumber;
-      hole.score = !score ? 0 : score.grossScore - h.getBumps(this.strokes, course.numberOfHoles);
+      hole.score = score.grossScore;
+      hole.bumps = h.getBumps(this.strokes, course.numberOfHoles);
       this.totalScore += hole.score;
       if (h.holeNumber <= 9) {
         this.totalFrontScore += hole.score;
@@ -58,5 +59,6 @@ export class SkinsPlayer {
 export class SkinsHole {
   holeNumber: number;
   score: number;
+  bumps: number;
   isSkin: boolean;
 }
