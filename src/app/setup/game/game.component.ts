@@ -84,7 +84,7 @@ export class GameComponent implements OnInit {
       if (this.game.competitionType.toLowerCase() === 'match') {
         name = `${this.displayName(this.game.teams[0].playerId)} vs ${this.displayName(this.game.teams[1].playerId)} ${this.game.gameType}`;
       } else {
-        name = `${this.game.isNet ? 'Net' : 'Gross'} ${this.game.gameType} (${this.game.scoringType})`;
+        name = `${this.game.isNet ? 'Net' : 'Gross'} ${this.game.gameType}`;
       }
     }
     this.game.name = name;

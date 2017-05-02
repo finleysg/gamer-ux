@@ -40,12 +40,12 @@
   </md-list-item>
   <md-divider></md-divider>
   <h3 md-subheader>Results</h3>
-  <md-list-item>
+  <!--<md-list-item>
     <a class="relative" [routerLink]="['results', round.code]">
       <md-icon>view_list</md-icon>
       <span>All Results</span>
     </a>
-  </md-list-item>
+  </md-list-item>-->
   <md-list-item *ngFor="let game of round.games">
     <a class="relative" [routerLink]="['results', round.code, game.id]">
       <md-icon>attach_money</md-icon>

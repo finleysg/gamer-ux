@@ -1,0 +1,49 @@
+<table *ngIf="round">
+  <tr>
+    <td colspan="2">
+      <button md-icon-button [color]="'primary'" (click)="goBack()"><md-icon>mode_edit</md-icon></button>
+    </td>
+    <td colspan="9" class="course-name">
+      <h3>{{game.name}}</h3>
+    </td>
+    <td></td>
+    <td>
+      <button *ngIf="side==='front'" md-icon-button [color]="'primary'" (click)="changeSide('back')"><md-icon>arrow_forward</md-icon></button>
+      <button *ngIf="side==='back'" md-icon-button [color]="'primary'" (click)="changeSide('front')"><md-icon>arrow_back</md-icon></button>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"></td>
+    <td *ngFor="let h of round.course.holes | sideFilter: side" class="hole">
+      {{h.holeNumber}}
+    </td>
+    <td colspan="2"></td>
+  </tr>
+  <tr>
+    <td class="handicap">Hdcp</td>
+    <td></td>
+    <td *ngFor="let h of round.course.holes | sideFilter: side" class="hole handicap">
+      {{h.handicap}}
+    </td>
+    <td class="hole-subtotal">{{side === 'front' ? 'OUT' : 'IN'}}</td>
+    <td class="hole-total">TOT</td>
+  </tr>
+  <tr class="scorecard-par-row">
+    <td>Par</td>
+    <td></td>
+    <td *ngFor="let h of round.course.holes | sideFilter: side" class="hole">
+      {{h.par}}
+    </td>
+    <td class="hole-subtotal">{{side === 'front' ? round.course.front9 : round.course.back9}}</td>
+    <td class="hole-total">{{round.course.par}}</td>
+  </tr>
+  <tr *ngFor="let player of skinsboard.players">
+    <td>{{player.name}}</td>
+    <td class="player-handicap">{{player.strokes}}</td>
+    <td *ngFor="let hole of player.holes | sideFilter: side" class="hole" [class.skin]="hole.isSkin">
+      <span>{{hole.score}}</span>
+    </td>
+    <td class="hole-subtotal">{{side === 'front' ? player.totalFrontScore : player.totalBackScore}}</td>
+    <td class="hole-total">{{player.totalScore}}</td>
+  </tr>
+</table>

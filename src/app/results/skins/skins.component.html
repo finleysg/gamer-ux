@@ -1,12 +1,31 @@
-<!--<md-card>
-  <md-card-title>{{game.name}}</md-card-title>
-  <md-card-content>-->
-    <md-list>
-      <md-list-item *ngFor="let skin of skins">
-        <md-icon class="mat-green" md-list-icon>monetization_on</md-icon>
-        <h4 md-line>{{skin.player.name}}</h4>
-        <p md-line>Hole {{skin.hole.holeNumber}} with a {{game.isNet ? 'net' : ''}} {{skin.score}}</p>
-      </md-list-item>
-    </md-list>
-<!--  </md-card-content>
-</md-card>-->
+<h5 class="mat-primary">Hole by Hole</h5>
+<p>There were {{skins.length}} skins won. Each skin is worth {{skinValue | currency:'USD':true}}</p>
+<table>
+  <thead>
+    <tr>
+      <th>Hole</th>
+      <th>Player</th>
+      <th>{{game.isNet ? 'Net' : ''}} Score</th>
+    </tr>
+  </thead>
+  <tr *ngFor="let skin of skins">
+    <td>{{skin.hole.holeNumber}}</td>
+    <td>{{skin.player.name}}</td>
+    <td>{{skin.score}}</td>
+  </tr>
+</table>
+<h5 class="mat-primary">Summary</h5>
+<table>
+  <thead>
+  <tr>
+    <th>Player</th>
+    <th>Skins</th>
+    <th>Winnings</th>
+  </tr>
+  </thead>
+  <tr *ngFor="let winner of winners">
+    <td>{{winner.name}}</td>
+    <td>{{winner.numberOfSkins}}</td>
+    <td class="push-right">{{winner.total | currency:'USD':true}}</td>
+  </tr>
+</table>

@@ -5,6 +5,7 @@ import { MaterialModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { RouterModule } from '@angular/router';
+import { LeaderboardPipe } from "./leaderboard.pipe";
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { RouterModule } from '@angular/router';
     FlexLayoutModule
   ],
   declarations: [
+    LeaderboardPipe
   ],
   providers: [
   ],
@@ -28,7 +30,8 @@ import { RouterModule } from '@angular/router';
     RouterModule,
     MaterialModule,
     BrowserAnimationsModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    LeaderboardPipe
   ]
 })
 export class SharedModule { }

@@ -6,3 +6,6 @@ table {
 .course-name {
   text-align: center;
 }
+.skin {
+  background: rgba(255,255,0,.7);
+}

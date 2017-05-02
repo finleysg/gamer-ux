@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { RoundResolverService } from '../core/round-resolver.service';
-import { GameResultsComponent } from './game-results/game-results.component';
+import {GameResultComponent} from "./game-result/game-result.component";
+import {LeaderboardResultComponent} from "./leaderboard-result/leaderboard-result.component";
 
 const routes: Routes = [
-  { path: 'results', children: [
-    { path: ':code', resolve: { round: RoundResolverService }, component: GameResultsComponent }
-  ]}
+  { path: 'results/:code/:id', component: GameResultComponent },
+  { path: 'results/:code/:id/board/:side', component: LeaderboardResultComponent }
 ];
 
 @NgModule({

@@ -1,5 +1,4 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { LeaderboardHole } from "../../models/leaderboard";
 
 @Pipe({
   name: 'sideFilter',
