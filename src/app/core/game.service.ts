@@ -9,7 +9,6 @@ import { clone, cloneDeep } from 'lodash';
 export class GameService {
 
   private playerList: Player[];
-  private teamNumbers: number[];
 
   constructor(private roundService: RoundService) {
     this.playerList = clone(roundService.players);
@@ -19,8 +18,10 @@ export class GameService {
     return this.playerList;
   }
 
-  get uniqueTeamNumbers(): number[] {
-    return this.teamNumbers;
+  teamMembers(game: Game, teamNumber: number): string {
+    let playerIds = game.teams.filter(t => t.teamNumber === teamNumber).map(t => t.playerId);
+    let players = this.playerList.filter(p => playerIds.indexOf(p.id) >= 0);
+    return players.map(p => p.name).join(', ');
   }
 
   selectGame(id: number): Game {

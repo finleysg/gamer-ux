@@ -12,5 +12,7 @@ table {
 .bumps {
   display: block;
   float: left;
-  margin-top: -15px;
+  margin: -6px -6px 0 4px;
+  /*margin-top: -6px;
+  margin-right: 0;*/
 }

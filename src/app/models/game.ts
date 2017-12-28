@@ -55,6 +55,12 @@ export class Game {
       'payouts': payouts
     }
   }
+  
+  get teamNumbers(): number[] {
+    return this.teams.map(team => team.teamNumber)
+      .filter((value, index, self) => self.indexOf(value) === index)
+      .sort((n1: number, n2: number) => n1 - n2);
+  }
 }
 
 export class Payout {

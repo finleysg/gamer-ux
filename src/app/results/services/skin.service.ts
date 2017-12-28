@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 
-import { Game } from '../models/game';
-import { Score, Skin } from '../models/score';
-import { RoundService } from '../core/round.service';
+import { Game } from '../../models/game';
+import { Score, Skin } from '../../models/score';
+import { RoundService } from '../../core/round.service';
 import { clone } from 'lodash';
 
 @Injectable()
@@ -41,14 +41,6 @@ export class SkinService {
 
   getNetSkin(game: Game, scores: Score[]): Score {
     const holes = this.roundService.round.course.numberOfHoles;
-    // const netScores = scores.map(s => {
-    //   // find the player's strokes for this game
-    //   const strokes = game.teams.filter(t => t.playerId === s.playerId).map(m => m.strokes)[0];
-    //   return {
-    //     'playerId': s.playerId,
-    //     'netScore': s.grossScore - s.hole.getBumps(strokes, holes)
-    //   }
-    // });
     scores.forEach(s => {
       const strokes = game.teams.filter(t => t.playerId === s.playerId).map(m => m.strokes)[0];
       s.netScore = s.grossScore - s.hole.getBumps(strokes, holes);

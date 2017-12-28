@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { RoundService } from '../core/round.service';
-import { GameService } from '../core/game.service';
-import { Game } from '../models/game';
-import { Score } from '../models/score';
-import { Hole } from '../models/hole';
+import { RoundService } from '../../core/round.service';
+import { GameService } from '../../core/game.service';
+import { Game } from '../../models/game';
+import { Score } from '../../models/score';
+import { Hole } from '../../models/hole';
 import { clone } from 'lodash';
 
 export class BestBallResult {
@@ -14,6 +14,12 @@ export class BestBallResult {
   totalScore: number = 0;
   resultText: string;
   amount: number = 0;
+}
+
+class MatchResult {
+  winner: number;
+  runningTotal: number;
+  remainingHoles: number;
 }
 
 @Injectable()
@@ -41,8 +47,8 @@ export class BestBallService {
       });
     });
     // sort and assign places
-    results = results.sort(r1, r2 => r1.score = r2.score);
-    results.forEach(r, idx =>  {
+    results = results.sort((r1: BestBallResult, r2: BestBallResult) => r1.totalScore - r2.totalScore);
+    results.forEach((r: BestBallResult, idx: number) =>  {
       r.position = idx + 1;
       r.resultText = `${this.displayPosition(r.position)} place`;
     });
@@ -121,7 +127,7 @@ export class BestBallService {
   }
 
   // TODO: Net scoring
-  evaluateMatch(game: Game, scores: Score[], holes: Hole[]): any[] {
+  evaluateMatch(game: Game, scores: Score[], holes: Hole[]): MatchResult {
     let isOver: boolean = false;
     let holeCount: number = 0;
     let runningTotal: number = 0;
@@ -130,10 +136,10 @@ export class BestBallService {
     holes.forEach(hole => {
       if (!isOver) {
         holeCount += 1;
-        let team1Scores = scores.filter(s => s.teamNumber === 1 && s.holeId === hole.id);
-        let team2Scores = scores.filter(s => s.teamNumber === 2 && s.holeId === hole.id);
-        t1 = this.getScore(game, team1Scores);
-        t2 = this.getScore(game, team2Scores);
+        const team1Scores = scores.filter(s => s.teamNumber === 1 && s.holeId === hole.id);
+        const team2Scores = scores.filter(s => s.teamNumber === 2 && s.holeId === hole.id);
+        const t1 = this.getScore(game, team1Scores);
+        const t2 = this.getScore(game, team2Scores);
         if (t1 < t2) {
           runningTotal += 1;
         } else if (t2 < t1) {
@@ -147,16 +153,16 @@ export class BestBallService {
       }
     });
     // format and return the result
-    let match = {
-      winner: null,
-      runningTotal: runningTotal,
-      remainingHoles: remainingHoles
-    };
+    let match = new MatchResult();
+    match.winner = null;
+    match.runningTotal = runningTotal;
+    match.remainingHoles = remainingHoles;
     if (runningTotal > 0) {
       match.winner = 1;
     } else if (runningTotal < 0) {
       match.winner = 2;
     }
+    
     return match;
   }
 
@@ -164,7 +170,7 @@ export class BestBallService {
     if (remainingHoles === 0) {
       return `${Math.abs(runningTotal)} up`;
     }
-    return `${Math.abs(runningScore)} and ${remainingHoles}`;
+    return `${Math.abs(runningTotal)} and ${remainingHoles}`;
   }
 
   displayPosition(position: number): string {
@@ -190,26 +196,26 @@ export class BestBallService {
     return balls;
   }
 
-  getLowScores(game: Game, scores: Score[]): Score {
+  getLowScores(game: Game, scores: Score[]): Score[] {
     const balls = this.getNumberOfBalls(game);
-    const lowScores = scores.sort(s1, s2 => s1.grossScore - s2.grossScore);
+    const lowScores = scores.sort((s1: Score, s2: Score) => s1.grossScore - s2.grossScore);
     return lowScores.slice(0, balls-1);
   }
 
   getScore(game: Game, scores: Score[]): number {
     let score = 0;
     const balls = this.getNumberOfBalls(game);
-    const scoreNumbers = scores.map(s => s.grossScore).sort(n1, n2 => n1 - n2);
+    const scoreNumbers = scores.map(s => s.grossScore).sort((n1: number, n2: number) => n1 - n2);
     for(let i = 0; i < balls; i++) {
       score += scoreNumbers[i];
     }
     return score;
   }
 
-  getLowNetScores(game: Game, scores: Score[]): Score {
+  getLowNetScores(game: Game, scores: Score[]): Score[] {
     this.calculateNetScores(game, scores);
     const balls = this.getNumberOfBalls(game);
-    const lowScores = scores.sort(s1, s2 => s1.netScore - s2.netScore);
+    const lowScores = scores.sort((s1: Score, s2: Score) => s1.netScore - s2.netScore);
     return lowScores.slice(0, balls-1);
   }
 
@@ -217,7 +223,7 @@ export class BestBallService {
     this.calculateNetScores(game, scores);
     let score = 0;
     const balls = this.getNumberOfBalls(game);
-    const scoreNumbers = scores.map(s => s.netScore).sort(n1, n2 => n1 - n2);
+    const scoreNumbers = scores.map(s => s.netScore).sort((n1: number, n2: number) => n1 - n2);
     for(let i = 0; i < balls; i++) {
       score += scoreNumbers[i];
     }
@@ -227,7 +233,7 @@ export class BestBallService {
   calculateNetScores(game: Game, scores: Score[]): void {
     scores.forEach(s => {
       const strokes = game.teams.filter(t => t.playerId === s.playerId).map(m => m.strokes)[0];
-      s.netScore = s.grossScore - s.hole.getBumps(strokes, holes);
+      s.netScore = s.grossScore - s.hole.getBumps(strokes, this.holes.length);
     });
   }
 }
